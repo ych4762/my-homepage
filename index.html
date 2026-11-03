@@ -1119,6 +1119,8 @@ auto;
   .wp-day.today{background:rgba(47,111,235,.1)}
   .wp-day .dn{opacity:.65;font-size:11.5px}
   .wp-day svg{width:30px;height:30px}
+  .wp-day .dc{font-size:11.5px;opacity:.85;line-height:1.15;white-space:nowrap}
+  .wp-day .dts{display:flex;align-items:baseline;gap:5px}
   .wp-day .dt{font-weight:600}
   .wp-day .ds{opacity:.55;font-size:11px}
   .wp-hourly{margin-top:12px}
@@ -2777,11 +2779,12 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
       + '<span>最高 ' + wpUnitConv(d.daily.temperature_2m_max[0]) + '° · 最低 ' + wpUnitConv(d.daily.temperature_2m_min[0]) + '°</span>'
       + '<span>体感 ' + wpUnitConv(cur.apparent_temperature) + '°</span></span>';
     $('#wpDaily').innerHTML = d.daily.time.slice(0, 7).map((t, i) =>
-      '<div class="wp-day' + (i === 0 ? ' today' : '') + '">'
+      '<div class="wp-day' + (i === 0 ? ' today' : '') + '" title="' + esc(condName(d.daily.weather_code[i])) + '">'
       + '<span class="dn">' + (i === 0 ? '今天' : esc(wpWeekday(t))) + '</span>'
       + weatherIcon(d.daily.weather_code[i])
-      + '<span class="dt">' + wpUnitConv(d.daily.temperature_2m_max[i]) + '°</span>'
-      + '<span class="ds">' + wpUnitConv(d.daily.temperature_2m_min[i]) + '°</span></div>'
+      + '<span class="dc">' + esc(condName(d.daily.weather_code[i])) + '</span>'
+      + '<span class="dts"><span class="dt">' + wpUnitConv(d.daily.temperature_2m_max[i]) + '°</span>'
+      + '<span class="ds">' + wpUnitConv(d.daily.temperature_2m_min[i]) + '°</span></span></div>'
     ).join('');
     $('#wpHourly').innerHTML = hourlySVG(d);
     const i0 = wpNowIndex(d);
