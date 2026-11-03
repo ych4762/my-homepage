@@ -1560,14 +1560,14 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
   const DEFAULT_SITES = [
     { name:'订单管理',    url:'http://crm.zhanchen.cn:8885/#/mixed-page/view/MXP00005', glyph:'订单', color:'#2979FF', g:0, cat:'w' },
     { name:'微信网页版',  url:'https://wx.qq.com/?lang=zh_CN',                          glyph:'微信', color:'#07C160', g:0, cat:'c' },
-    { name:'爱淘宝',      url:'https://ai.taobao.com/?pid=mm_1042050059_1426300057_110172600194&union_lens=lensId%3APUB%401585387134%400b0af5b7_0e21_171206fdf73_047b%4001', glyph:'淘', color:'#FF5000', g:0, cat:'l' },
-    { name:'知乎',        url:'https://www.zhihu.com/',                                 glyph:'知', color:'#0084FF', g:0, cat:'c' },
-    { name:'携程',        url:'https://www.ctrip.com/',                                 glyph:'携', color:'#287DFA', g:0, cat:'l' },
+    { name:'爱淘宝',      url:'https://ai.taobao.com/?pid=mm_1042050059_1426300057_110172600194&union_lens=lensId%3APUB%401585387134%400b0af5b7_0e21_171206fdf73_047b%4001', glyph:'淘宝', color:'#FF5000', g:0, cat:'l' },
+    { name:'知乎',        url:'https://www.zhihu.com/',                                 glyph:'知乎', color:'#0084FF', g:0, cat:'c' },
+    { name:'携程',        url:'https://www.ctrip.com/',                                 glyph:'携程', color:'#287DFA', g:0, cat:'l' },
     { name:'今日头条',    url:'https://www.toutiao.com/',                               glyph:'今日', color:'#F04142', g:0, cat:'c' },
     { name:'百度地图',    url:'https://map.baidu.com/',                                 glyph:'地图', color:'#2A6BE0', g:0, cat:'c' },
-    { name:'扩展',        url:'edge://extensions/?id=copeiejfefagfmjndfgbllokphlmalon',  glyph:'扩', color:'#2F6FEB', g:0, cat:'s' },
+    { name:'扩展',        url:'edge://extensions/?id=copeiejfefagfmjndfgbllokphlmalon',  glyph:'扩展', color:'#2F6FEB', g:0, cat:'s' },
     { name:'吾爱破解',    url:'https://www.52pojie.cn/',                                glyph:'吾爱', color:'#0B5FFF', g:0, cat:'d' },
-    { name:'易破解',      url:'http://www.ypojie.com/',                                 glyph:'易', color:'#5B8DEF', g:0, cat:'d' },
+    { name:'易破解',      url:'http://www.ypojie.com/',                                 glyph:'易破', color:'#5B8DEF', g:0, cat:'d' },
     { name:'聚问天空',    url:'https://www.ansky.com/',                                 glyph:'12', color:'#2F80ED', g:0, cat:'d' },
     { name:'绿软小站',    url:'https://www.gndown.com/',                                glyph:'绿软', color:'#1FA463', g:0, cat:'d' },
     { name:'系统迷',      url:'https://www.xitmi.com/',                                 glyph:'系统', color:'#2F6FEB', g:0, cat:'d' },
@@ -1575,7 +1575,7 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     { name:'大眼仔旭',    url:'http://www.dayanzai.me/',                                glyph:'大眼', color:'#2AA9E0', g:0, cat:'d' },
     { name:'知轩藏书',    url:'http://www.zxcs.me/',                                    glyph:'知轩', color:'#4C6EF5', g:0, cat:'d' },
     { name:'注册安全工程师', url:'http://rmocse.chinasafety.ac.cn/Main.aspx',            glyph:'注册', color:'#2D7FF9', g:0, cat:'w' },
-    { name:'Microsoft',   url:'https://copilot.microsoft.com/',                         glyph:'M',  color:'#0067B8', g:0, cat:'a' },
+    { name:'Microsoft',   url:'https://copilot.microsoft.com/',                         glyph:'MS',  color:'#0067B8', g:0, cat:'a' },
     { name:'上海危爆',    url:'http://180.168.211.50:9080/sbwp_sh/identify.do?method=login', glyph:'上海', color:'#D93A3A', g:0, cat:'w' },
     { name:'ExcelHome',   url:'https://club.excelhome.net/forum.php',                   glyph:'EH', color:'#217346', g:0, cat:'w' },
     { name:'网盘直链',    url:'https://www.youxiaohou.com/install.html#%F0%9F%9A%80-%E9%80%9F%E5%BA%A6%E6%B5%8B%E8%AF%95', glyph:'网盘', color:'#8B5CF6', g:0, cat:'d' },
@@ -1663,6 +1663,7 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     (function(){
       const catOf = new Map();
       def.sites.forEach(d => { if (!catOf.has(d.url)) catOf.set(d.url, d.cat); });
+      const GLYPH_UP = { '爱淘宝':'淘宝', '知乎':'知乎', '携程':'携程', '扩展':'扩展', '易破解':'易破', 'Microsoft':'MS' };
       const seen = new Set();
       const out = [];
       s.sites.forEach(x => {
@@ -1670,6 +1671,7 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
         if (seen.has(key)) return;
         seen.add(key);
         if (!x.cat) x.cat = catOf.get(x.url) || 'c';
+        if (x.glyph && x.glyph.length === 1 && GLYPH_UP[x.name]) x.glyph = GLYPH_UP[x.name];
         out.push(x);
       });
       s.sites = out;
@@ -1784,7 +1786,7 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     a.href = s.url;
     a.target = state.newTab ? '_blank' : '_self';
     a.rel = 'noopener';
-    const glyph = s.glyph || s.name.slice(0, 1);
+    const glyph = s.glyph || s.name.slice(0, 2);
     a.innerHTML = '<span class="tile-icon' + (glyph.length > 1 ? ' two' : '') + '" style="--c:' + esc(s.color || '#1890FF') + '">' + esc(glyph) + '</span>'
                 + '<span class="tile-name">' + esc(s.name) + '</span>';
     a.addEventListener('click', e => {
@@ -2293,7 +2295,7 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     if (!name){ toast('请填写图标名称'); $('#fName').focus(); return; }
     if (!url){ toast('请填写网址'); $('#fUrl').focus(); return; }
     if (!/^https?:\/\//i.test(url)) url = 'https://' + url.replace(/^\/+/, '');
-    const glyph = ($('#fGlyph').value.trim() || name.slice(0, 1)).slice(0, 2);
+    const glyph = ($('#fGlyph').value.trim() || name.slice(0, 2)).slice(0, 2);
     const color = $('#fColor').value || '#1890FF';
     const isNew = editingIndex === null;
     if (isNew){
