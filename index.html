@@ -16,6 +16,8 @@
     --shadow:0 1px 2px rgba(17,24,39,.05);
     --radius:8px;
     --k:1;
+    --w-scale:1;
+    --h-scale:1;
     --grid-gap:8px;
     --home-max:1400px;
   }
@@ -288,8 +290,8 @@
     display:flex;
     align-items:center;
     gap:calc(8px * var(--k));
-    width:calc(110px * var(--k));
-    height:calc(46px * var(--k));
+    width:calc(110px * var(--k) * var(--w-scale));
+    height:calc(46px * var(--k) * var(--h-scale));
     padding:calc(3px * var(--k)) calc(8px * var(--k)) calc(3px * var(--k)) calc(3px * var(--k));
     border-radius:7px;
     background:var(--tile);
@@ -386,7 +388,7 @@
   .tile.add .add-label{display:none}
 
   /* 紧凑 */
-  body.layout-compact .tile{width:calc(102px * var(--k));height:calc(40px * var(--k));padding:calc(3px * var(--k)) calc(8px * var(--k)) calc(3px * var(--k)) calc(3px * var(--k));gap:calc(7px * var(--k))}
+  body.layout-compact .tile{width:calc(102px * var(--k) * var(--w-scale));height:calc(40px * var(--k) * var(--h-scale));padding:calc(3px * var(--k)) calc(8px * var(--k)) calc(3px * var(--k)) calc(3px * var(--k));gap:calc(7px * var(--k))}
   body.layout-compact .tile-icon{flex-basis:calc(34px * var(--k));width:calc(34px * var(--k));height:calc(34px * var(--k));font-size:calc(12px * var(--k))}
   body.layout-compact .tile-icon.two{font-size:calc(10px * var(--k))}
   body.layout-compact .tile-name{font-size:calc(12px * var(--k))}
@@ -662,10 +664,10 @@
   }
   .card{
     background:#fff;
-    border:1px solid #F1F2F4;
-    border-radius:5px;
-    box-shadow:0 2px 6px rgba(16,24,40,.045);
-    padding:18px 22px;
+    border:1px solid #EEF0F3;
+    border-radius:10px;
+    box-shadow:0 1px 3px rgba(16,24,40,.04), 0 4px 12px rgba(16,24,40,.04);
+    padding:20px 24px;
     margin-bottom:16px;
   }
   .card h3{
@@ -852,20 +854,20 @@
   .hex-row input:focus{border-color:rgba(24,144,255,.55)}
   .btn{
     height:32px;
-    padding:0 14px;
+    padding:0 16px;
     border:1px solid #E3E6EA;
-    border-radius:4px;
+    border-radius:6px;
     background:#fff;
     font-size:12px;
     color:#4E5760;
     cursor:pointer;
-    transition:border-color .15s,color .15s,background .15s;
+    transition:all .15s ease;
   }
   .btn:hover{border-color:rgba(24,144,255,.45);color:var(--accent)}
   .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
   .btn.primary:hover{background:#0E7FE0;color:#fff}
-  .btn.danger{color:#E5484D;border-color:#F0CDCF}
-  .btn.danger:hover{background:#FFF6F6;border-color:#E5484D;color:#E5484D}
+  .btn.danger{color:#6B747D;border-color:#E1E5E9}
+  .btn.danger:hover{background:#F5F7F9;border-color:#C5CDD4;color:#4A5560}
   .mini-note{
     font-size:11.5px;
     color:#9AA3AC;
@@ -1193,6 +1195,12 @@
               <div class="row"><span class="lbl">图标大小</span>
                 <span class="range-line"><input class="range" type="range" id="scaleRange" min="0.8" max="1.8" step="0.05" aria-label="图标大小"><b class="range-val" id="scaleVal">115%</b></span>
               </div>
+              <div class="row"><span class="lbl">图标宽度</span>
+                <span class="range-line"><input class="range" type="range" id="wScaleRange" min="0.7" max="1.5" step="0.05" aria-label="图标宽度"><b class="range-val" id="wScaleVal">100%</b></span>
+              </div>
+              <div class="row"><span class="lbl">图标高度</span>
+                <span class="range-line"><input class="range" type="range" id="hScaleRange" min="0.7" max="1.5" step="0.05" aria-label="图标高度"><b class="range-val" id="hScaleVal">100%</b></span>
+              </div>
               <div class="row"><span class="lbl">图标间距</span>
                 <span class="range-line"><input class="range" type="range" id="gapRange" min="4" max="24" step="1" aria-label="图标间距"><b class="range-val" id="gapVal">8px</b></span>
               </div>
@@ -1280,7 +1288,7 @@
               <span>个人专用的新标签页 · 本地版</span>
             </div>
           </div>
-          <p class="mini-note">界面风格参考 MONKNOW 新标签页，为个人使用而制作。所有数据保存在本机浏览器的 localStorage 中。</p>
+          <p class="mini-note">为个人使用而制作，所有数据保存在本机浏览器的 localStorage 中。</p>
         </div>
         <div class="card">
           <h3>使用说明</h3>
@@ -1404,6 +1412,8 @@
       theme: 'dark',
       layout: 'classic',
       scale: 1.15,
+      wScale: 1,
+      hScale: 1,
       gap: 8,
       pageWidth: 'full',
       showSearch: true,
@@ -1459,14 +1469,22 @@
   function applyMetrics(){
     const r = document.documentElement.style;
     r.setProperty('--k', String(state.scale));
+    r.setProperty('--w-scale', String(state.wScale));
+    r.setProperty('--h-scale', String(state.hScale));
     r.setProperty('--grid-gap', state.gap + 'px');
     r.setProperty('--home-max', PAGE_WIDTHS[state.pageWidth] || '100%');
     const sr = $('#scaleRange'), gr = $('#gapRange');
+    const wr = $('#wScaleRange'), hr = $('#hScaleRange');
     if (sr) sr.value = String(state.scale);
     if (gr) gr.value = String(state.gap);
+    if (wr) wr.value = String(state.wScale);
+    if (hr) hr.value = String(state.hScale);
     const sv = $('#scaleVal'), gv = $('#gapVal');
+    const wv = $('#wScaleVal'), hv = $('#hScaleVal');
     if (sv) sv.textContent = Math.round(state.scale * 100) + '%';
     if (gv) gv.textContent = state.gap + 'px';
+    if (wv) wv.textContent = Math.round(state.wScale * 100) + '%';
+    if (hv) hv.textContent = Math.round(state.hScale * 100) + '%';
   }
 
   /* ---------- 待机页样式 ---------- */
@@ -1903,11 +1921,19 @@
     state.scale = Number(e.target.value);
     applyMetrics();
   });
+  $('#wScaleRange').addEventListener('input', e => {
+    state.wScale = Number(e.target.value);
+    applyMetrics();
+  });
+  $('#hScaleRange').addEventListener('input', e => {
+    state.hScale = Number(e.target.value);
+    applyMetrics();
+  });
   $('#gapRange').addEventListener('input', e => {
     state.gap = Number(e.target.value);
     applyMetrics();
   });
-  ['scaleRange','gapRange'].forEach(id => {
+  ['scaleRange','wScaleRange','hScaleRange','gapRange'].forEach(id => {
     $('#' + id).addEventListener('change', save);
   });
 
