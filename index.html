@@ -1576,7 +1576,6 @@
     { name:'系统迷',      url:'https://www.xitmi.com/',                                 glyph:'系统', color:'#2F6FEB', g:0 },
     { name:'mefcl',       url:'https://www.mefcl.com/',                                 glyph:'me', color:'#4A90E2', g:0 },
     { name:'大眼仔旭',    url:'http://www.dayanzai.me/',                                glyph:'大眼', color:'#2AA9E0', g:0 },
-    { name:'知轩藏书',    url:'http://www.zxcs.me/',                                    glyph:'知轩', color:'#4C6EF5', g:0 },
     { name:'注册安全工程师', url:'http://rmocse.chinasafety.ac.cn/Main.aspx',            glyph:'注册', color:'#2D7FF9', g:0 },
     { name:'Microsoft',   url:'https://copilot.microsoft.com/',                         glyph:'M',  color:'#0067B8', g:0 },
     { name:'上海危爆',    url:'http://180.168.211.50:9080/sbwp_sh/identify.do?method=login', glyph:'上海', color:'#D93A3A', g:0 },
@@ -1584,26 +1583,37 @@
     { name:'网盘直链',    url:'https://www.youxiaohou.com/install.html#%F0%9F%9A%80-%E9%80%9F%E5%BA%A6%E6%B5%8B%E8%AF%95', glyph:'网盘', color:'#8B5CF6', g:0 },
     { name:'珠海展辰',    url:'https://www.umu.cn/index#/index',                        glyph:'珠海', color:'#0EA5A4', g:0 },
     { name:'聚合网盘',    url:'https://juhepan.cn/',                                    glyph:'聚合', color:'#6A5ACD', g:0 },
-    { name:'添加配置',    url:'http://blts.x3322.net/index/userstore/add.html',          glyph:'添加', color:'#8B5CF6', g:0 },
-    { name:'东东AI商店',  url:'https://dongai.shop/chat',                               glyph:'东东', color:'#E5484D', g:0 },
-    { name:'OKZTWO',      url:'http://47.116.73.91:65533/index.php/#/plan',              glyph:'OK', color:'#E5A11C', g:0 },
+    { name:'OKZTWO',      url:'http://47.116.73.91:65533/',                             glyph:'OK', color:'#E5A11C', g:0 },
     { name:'Excel函数',   url:'https://www.lanrenexcel.com/excel-functions-list/',       glyph:'EX', color:'#21A366', g:0 },
-    { name:'AnFuns',      url:'https://www.anfuns.cc/',                                 glyph:'An', color:'#E5484D', g:0 },
     { name:'文库下载',    url:'http://111.180.204.129:8848/web',                         glyph:'文库', color:'#E5484D', g:0 },
     { name:'微信图片',    url:'http://118.178.194.25/filerecv/index.html?from=soft',      glyph:'微信', color:'#07C160', g:0 },
     { name:'发货计划',    url:'https://docs.qq.com/sheet/DU2RwWmZRUFFHZm5Z?tab=7jwf92',  glyph:'发货', color:'#22B573', g:0 },
     { name:'MSDN',        url:'https://msdn.sjjzm.com/win11.html',                       glyph:'Wi', color:'#7C5CFC', g:0 },
     { name:'my-tv',       url:'https://github.com/lizongying/my-tv',                     glyph:'GH', color:'#171515', g:0 },
     { name:'统一登录',    url:'http://101.227.181.188:8088/ajpt/login.html',             glyph:'统一', color:'#22B573', g:0 },
-    { name:'我的電視',    url:'https://lyrics.run/my-tv-0.html',                         glyph:'我的', color:'#2F80ED', g:0 },
     { name:'塔猫',        url:'http://youhou.tamao.fun/',                                glyph:'塔猫', color:'#3B4252', g:0 },
-    { name:'电影天堂',    url:'https://www.dyttcn.com/#',                                glyph:'电影', color:'#2F3640', g:0 },
     { name:'系统迷',      url:'https://www.xitmi.com/',                                 glyph:'系统', color:'#2F6FEB', g:0 },
-    { name:'度云',        url:'https://hy.oxah.cn/user',                                 glyph:'度云', color:'#E5484D', g:0 },
     { name:'codn',        url:'https://d.itadn.com/',                                    glyph:'co', color:'#F5A623', g:0 },
     { name:'文件接收',    url:'http://118.178.194.25/filerecv/index.html?from=soft',      glyph:'文件', color:'#E5484D', g:0 },
     { name:'飞牛',        url:'https://192.168.1.7/',                                    glyph:'飞牛', color:'#E5484D', g:0 }
   ];
+
+  /* 实测已失效的网址（域名不存在 / 域名停放 / 整站 404 / 服务已停）。
+     旧版浏览器 localStorage 里仍会残留这些图标，靠 SITES_VERSION 在加载时自愈清除。 */
+  const SITES_VERSION = 2;
+  const DEAD_URLS = [
+    'http://www.zxcs.me/',
+    'http://blts.x3322.net/index/userstore/add.html',
+    'https://dongai.shop/chat',
+    'https://www.anfuns.cc/',
+    'https://lyrics.run/my-tv-0.html',
+    'https://www.dyttcn.com/#',
+    'https://hy.oxah.cn/user'
+  ];
+  /* 站点仍在、只是旧路径 404 的，改为可用地址而不是删除 */
+  const SITE_URL_FIX = {
+    'http://47.116.73.91:65533/index.php/#/plan': 'http://47.116.73.91:65533/'
+  };
 
   /* Open-Meteo 的中文地名检索存在大量重名：搜「珠海」时首个结果是山东的「珠海」
      (35.87N, 119.99E)，而非广东珠海 (22.28N, 113.57E)。下表用于精确匹配常用城市，
@@ -1669,6 +1679,7 @@
       dateBlur: 10,
       dateRadius: 999,
       cities: [{ name:'珠海', lat:22.27694, lon:113.56778 }],
+      sitesVersion: SITES_VERSION,
       h24: true,
       followSystem: false,
       bg: { light:'#F5F7F8', dark:'#003355' },
@@ -1702,6 +1713,13 @@
     if (!s.cities.length){ s.cities = def.cities; repaired = true; }
     if (!(Number.isInteger(s.wpCity) && s.wpCity >= 0 && s.wpCity < s.cities.length)){
       s.wpCity = 0; repaired = true;
+    }
+    /* 自愈：清除历史本地数据里已失效的默认网址，并修正改过路径的链接 */
+    if ((Number(saved.sitesVersion) || 1) < SITES_VERSION && Array.isArray(s.sites)){
+      s.sites = s.sites.filter(x => x && DEAD_URLS.indexOf(x.url) < 0)
+        .map(x => SITE_URL_FIX[x.url] ? Object.assign({}, x, { url: SITE_URL_FIX[x.url] }) : x);
+      s.sitesVersion = SITES_VERSION;
+      repaired = true;
     }
     s.editMode = false;
     if (repaired){
