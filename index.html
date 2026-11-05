@@ -66,7 +66,8 @@
   .topbar{
     width:100%;
     display:flex;
-    justify-content:flex-end;
+    justify-content:space-between;
+    align-items:flex-start;
     padding:14px 2px 0;
     position:relative;
     z-index:30;
@@ -1185,12 +1186,202 @@
     .home{margin-top:36px}
     .bs-desc{gap:12px}
   }
+
+  /* ---------- 左上角万年历 ---------- */
+  :root{
+    --cal-fg:#2F3740;
+    --cal-sub:#7A848E;
+    --cal-bg:rgba(255,255,255,.82);
+    --cal-pop-bg:rgba(252,253,255,.94);
+    --cal-bd:rgba(16,24,40,.10);
+    --cal-line:rgba(16,24,40,.09);
+    --cal-soft:rgba(16,24,40,.045);
+    --cal-hover:rgba(24,144,255,.12);
+    --cal-weekend:#D2605A;
+    --cal-fest:#C8791B;
+    --cal-term:#2B8568;
+  }
+  html[data-theme="dark"]{
+    --cal-fg:rgba(255,255,255,.95);
+    --cal-sub:rgba(255,255,255,.80);
+    --cal-bg:rgba(255,255,255,.10);
+    --cal-pop-bg:rgba(9,34,60,.92);
+    --cal-bd:rgba(255,255,255,.16);
+    --cal-line:rgba(255,255,255,.13);
+    --cal-soft:rgba(255,255,255,.07);
+    --cal-hover:rgba(255,255,255,.14);
+    --cal-weekend:#FFB6AE;
+    --cal-fest:#FFC978;
+    --cal-term:#8FE0C2;
+  }
+  html[data-theme="dark"] .cal-chip,
+  html[data-theme="dark"] .cal-pop{
+    border:1px solid rgba(255,255,255,.15);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 12px 34px rgba(0,0,0,.38);
+  }
+  body.no-calendar .cal{display:none}
+  body.cal-open .topbar{z-index:45}
+  .cal{position:relative;z-index:40}
+  .cal-chip{
+    display:flex;align-items:center;gap:9px;
+    padding:6px 12px 6px 11px;
+    border:1px solid var(--cal-bd);
+    border-radius:14px;
+    background:var(--cal-bg);
+    color:var(--cal-fg);
+    box-shadow:0 2px 10px rgba(16,24,40,.08);
+    backdrop-filter:blur(12px) saturate(1.35);
+    -webkit-backdrop-filter:blur(12px) saturate(1.35);
+    cursor:pointer;
+    text-align:left;
+    transition:transform .16s,box-shadow .16s,border-color .16s;
+  }
+  .cal-chip:hover{transform:translateY(-1px);border-color:rgba(24,144,255,.45)}
+  .cal.open .cal-chip{border-color:rgba(24,144,255,.55)}
+  .cal-badge{
+    width:34px;height:36px;flex:0 0 auto;
+    border-radius:9px;overflow:hidden;
+    background:linear-gradient(180deg,#F15B55,#D8413B);
+    color:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    box-shadow:0 2px 5px rgba(200,60,55,.28);
+  }
+  .cal-badge i{font-style:normal;font-size:8.5px;line-height:1.1;opacity:.9;letter-spacing:.5px}
+  .cal-badge b{font-size:17px;line-height:1.05;font-weight:700;font-variant-numeric:tabular-nums}
+  .cal-clock{
+    font-size:21px;font-weight:650;letter-spacing:.4px;line-height:1;
+    font-variant-numeric:tabular-nums;white-space:nowrap;
+  }
+  .cal-sec{font-size:11px;color:var(--cal-sub);font-variant-numeric:tabular-nums;align-self:flex-end;margin:0 0 2px -5px}
+  .cal-sep{width:1px;height:26px;background:var(--cal-line);flex:0 0 auto}
+  .cal-meta{display:flex;flex-direction:column;gap:3px;line-height:1.25;white-space:nowrap}
+  .cal-date{font-size:11.5px;font-weight:600}
+  .cal-lunar{font-size:10px;color:var(--cal-sub)}
+  .cal-pop{
+    position:absolute;top:calc(100% + 10px);left:0;
+    width:314px;padding:13px 13px 11px;
+    border:1px solid var(--cal-bd);
+    border-radius:16px;
+    background:var(--cal-pop-bg);
+    color:var(--cal-fg);
+    box-shadow:0 16px 44px rgba(4,20,40,.24);
+    backdrop-filter:blur(22px) saturate(1.5);
+    -webkit-backdrop-filter:blur(22px) saturate(1.5);
+    display:none;
+  }
+  .cal.open .cal-pop{display:block;animation:calIn .16s ease-out}
+  @keyframes calIn{from{opacity:0;transform:translateY(-6px) scale(.985)}to{opacity:1;transform:none}}
+  .cal-nav{display:flex;align-items:center;gap:4px;margin-bottom:8px}
+  .cal-nav button{
+    width:25px;height:25px;flex:0 0 auto;
+    border:0;border-radius:7px;background:transparent;
+    color:var(--cal-fg);font-size:14px;line-height:1;
+    cursor:pointer;transition:background .15s;
+  }
+  .cal-nav button:hover{background:var(--cal-hover)}
+  .cal-nav button:disabled{opacity:.3;cursor:default}
+  .cal-title{
+    flex:1;min-width:0;text-align:center;cursor:pointer;
+    display:flex;flex-direction:column;gap:2px;padding:2px 0;border-radius:6px;
+  }
+  .cal-title:hover{background:var(--cal-soft)}
+  .cal-title b{font-size:14px;font-weight:650;letter-spacing:.3px}
+  .cal-title span{font-size:10px;color:var(--cal-sub)}
+  .cal-today{font-size:11px !important;width:auto !important;padding:0 8px;border:1px solid var(--cal-line) !important}
+  .cal-jump{display:none;gap:6px;align-items:center;margin:0 0 9px;padding:8px;border-radius:9px;background:var(--cal-soft)}
+  .cal-jump.show{display:flex}
+  .cal-jump input,.cal-jump select{
+    height:26px;border:1px solid var(--cal-line);border-radius:6px;
+    background:var(--cal-pop-bg);color:var(--cal-fg);
+    font-family:inherit;font-size:12px;padding:0 6px;min-width:0;
+  }
+  .cal-jump input{width:74px}
+  .cal-jump select{flex:1}
+  .cal-jump button{
+    height:26px;padding:0 10px;border:0;border-radius:6px;
+    background:var(--accent);color:#fff;font-size:11.5px;cursor:pointer;
+  }
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+  .cal-wd{text-align:center;font-size:11px;color:var(--cal-sub);padding:5px 0 6px}
+  .cal-wd.we{color:var(--cal-weekend)}
+  .cal-cell{
+    height:39px;border:0;border-radius:9px;background:transparent;color:var(--cal-fg);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    cursor:pointer;padding:0;transition:background .13s;
+  }
+  .cal-cell:hover{background:var(--cal-hover)}
+  .cal-cell .n{font-size:13px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+  .cal-cell .s{font-size:9.5px;line-height:1;color:var(--cal-sub);white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:clip}
+  .cal-cell.we .n{color:var(--cal-weekend)}
+  .cal-cell.out{opacity:.34}
+  .cal-cell.fest .s{color:var(--cal-fest);font-weight:700}
+  .cal-cell.term .s{color:var(--cal-term);font-weight:700}
+  .cal-cell.today .n{
+    display:grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--accent);color:#fff;
+  }
+  .cal-cell.today.we .n{color:#fff}
+  .cal-cell.sel{box-shadow:inset 0 0 0 1px var(--accent);background:var(--cal-hover)}
+  .cal-foot{
+    margin-top:9px;padding:9px 10px;border-radius:10px;background:var(--cal-soft);
+    display:flex;flex-direction:column;gap:3px;
+  }
+  .cal-foot b{font-size:12px;font-weight:650}
+  .cal-foot span{font-size:11px;color:var(--cal-sub);line-height:1.45}
+  .cal-foot .tags{color:var(--cal-fest)}
+  .cal-tip{margin-top:7px;text-align:center;font-size:10px;color:var(--cal-sub);opacity:.9}
+  @media (max-width:640px){
+    .cal-chip{padding:5px 8px;gap:6px;border-radius:12px}
+    .cal-badge{width:28px;height:31px;border-radius:7px}
+    .cal-badge b{font-size:15px}
+    .cal-clock{font-size:17px}
+    .cal-sec{font-size:10px;margin-left:-4px}
+    .cal-sep,.cal-lunar{display:none}
+    .cal-date{font-size:10.5px}
+    .cal-pop{width:min(314px,calc(100vw - 32px));left:0}
+  }
+  @media (max-width:400px){
+    .cal-meta{display:none}
+  }
 </style>
 </head>
 <body class="layout-classic">
 
 <div class="page">
   <div class="topbar">
+    <!-- 左上角万年历：实时时钟 + 可翻查的公历/农历月历 -->
+    <div class="cal" id="calRoot">
+      <button type="button" class="cal-chip" id="calChip" aria-haspopup="dialog" aria-expanded="false" title="点击打开万年历">
+        <span class="cal-badge"><i id="calBadgeMon">--</i><b id="calBadgeDay">--</b></span>
+        <span class="cal-clock" id="calHM">--:--</span><span class="cal-sec" id="calSec">:--</span>
+        <span class="cal-sep"></span>
+        <span class="cal-meta"><span class="cal-date" id="calDate">--</span><span class="cal-lunar" id="calLunar">--</span></span>
+      </button>
+      <div class="cal-pop" id="calPop" role="dialog" aria-label="万年历">
+        <div class="cal-nav">
+          <button type="button" data-cal-step="-12" title="上一年" aria-label="上一年">«</button>
+          <button type="button" data-cal-step="-1" title="上个月" aria-label="上个月">‹</button>
+          <div class="cal-title" id="calTitle" title="点击跳转到指定年月">
+            <b id="calYM">--</b><span id="calYZ">--</span>
+          </div>
+          <button type="button" data-cal-step="1" title="下一个月" aria-label="下一个月">›</button>
+          <button type="button" data-cal-step="12" title="下一年" aria-label="下一年">»</button>
+          <button type="button" class="cal-today" id="calToday">今天</button>
+        </div>
+        <form class="cal-jump" id="calJump" autocomplete="off">
+          <input type="number" id="calJumpYear" min="1900" max="2100" step="1" aria-label="跳转年份">
+          <select id="calJumpMonth" aria-label="跳转月份"></select>
+          <button type="submit">跳转</button>
+        </form>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-foot">
+          <b id="calSelTitle">--</b>
+          <span id="calSelLunar">--</span>
+          <span class="tags" id="calSelTags"></span>
+        </div>
+        <div class="cal-tip">点日期查看详情 · 可翻查 1900—2100 年 · 含农历、节日与节气</div>
+      </div>
+    </div>
     <div class="top-pill">
       <button id="btnTheme" title="切换深浅主题" aria-label="切换主题"></button>
       <button id="btnEdit" title="编辑图标" aria-label="编辑图标">
@@ -1290,6 +1481,7 @@
             <div class="card">
               <h3>页面</h3>
               <div class="row"><span class="lbl">显示搜索框</span><button class="switch" data-toggle="showSearch" aria-checked="true"></button></div>
+              <div class="row"><span class="lbl">显示万年历</span><button class="switch" data-toggle="showCalendar" aria-checked="true"></button></div>
               <div class="row"><span class="lbl">显示图标名称</span><button class="switch" data-toggle="showLabels" aria-checked="true"></button></div>
               <div class="row"><span class="lbl">显示添加入口</span><button class="switch" data-toggle="showAdd" aria-checked="true"></button></div>
               <div class="row"><span class="lbl">显示天气面板</span><button class="switch" data-toggle="showWeather" aria-checked="true"></button></div>
@@ -1689,6 +1881,7 @@
       gap: 8,
       pageWidth: 'full',
       showSearch: true,
+      showCalendar: true,
       showLabels: true,
       showAdd: true,
       showWeather: true,
@@ -1756,6 +1949,7 @@
     /* 自愈：移除已下线的重复引擎（「微软搜索」与必应同址），回退到必应 */
     if (!ENGINES[s.engine]){ s.engine = 'bing'; repaired = true; }
     if (typeof s.suggest !== 'boolean'){ s.suggest = true; repaired = true; }
+    if (typeof s.showCalendar !== 'boolean'){ s.showCalendar = true; repaired = true; }
     s.editMode = false;
     if (repaired){
       try {
@@ -1876,6 +2070,7 @@
     $('#btnEdit').classList.toggle('on', !!state.editMode);
     $('#searchWrap').style.display = state.showSearch ? '' : 'none';
     b.classList.toggle('no-weather', !state.showWeather);
+    b.classList.toggle('no-calendar', !state.showCalendar);
     scheduleGridCols();
   }
   function applyState(){
@@ -3101,6 +3296,240 @@
     save();
     renderWpanel();
   });
+
+  /* ---------- 左上角万年历 ----------
+     公历 / 农历由浏览器 Intl 中文历法提供（覆盖 1900—2100 年，含闰月与干支）；
+     24 节气用太阳视黄经求解，误差约数分钟，不依赖任何外部接口。 */
+  (function(){
+    const MIN_Y = 1900, MAX_Y = 2100, RAD = Math.PI / 180;
+    const WD = ['日','一','二','三','四','五','六'];
+    const LDAY = ['','初一','初二','初三','初四','初五','初六','初七','初八','初九','初十',
+      '十一','十二','十三','十四','十五','十六','十七','十八','十九','二十',
+      '廿一','廿二','廿三','廿四','廿五','廿六','廿七','廿八','廿九','三十'];
+    const ZODIAC = {子:'鼠',丑:'牛',寅:'虎',卯:'兔',辰:'龙',巳:'蛇',午:'马',未:'羊',申:'猴',酉:'鸡',戌:'狗',亥:'猪'};
+    const SOLAR_FEST = {
+      '1-1':'元旦','2-14':'情人节','3-8':'妇女节','3-12':'植树节','4-1':'愚人节',
+      '5-1':'劳动节','5-4':'青年节','6-1':'儿童节','7-1':'建党节','8-1':'建军节',
+      '9-10':'教师节','10-1':'国庆节','10-31':'万圣夜','11-11':'双十一',
+      '12-24':'平安夜','12-25':'圣诞节'
+    };
+    const LUNAR_FEST = {
+      '正月-1':'春节','正月-15':'元宵节','二月-2':'龙抬头','五月-5':'端午节',
+      '七月-7':'七夕','七月-15':'中元节','八月-15':'中秋节','九月-9':'重阳节',
+      '腊月-8':'腊八节'
+    };
+    const TERMS = ['小寒','大寒','立春','雨水','惊蛰','春分','清明','谷雨','立夏','小满','芒种','夏至',
+      '小暑','大暑','立秋','处暑','白露','秋分','寒露','霜降','立冬','小雪','大雪','冬至'];
+    let lunarFmt = null;
+    try { lunarFmt = new Intl.DateTimeFormat('zh-CN-u-ca-chinese',{year:'numeric',month:'long',day:'numeric'}); }
+    catch(e){ lunarFmt = null; }
+
+    function keyOf(d){ return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate(); }
+    const lunarCache = new Map();
+    function lunarOf(d){
+      const k = keyOf(d);
+      if (lunarCache.has(k)) return lunarCache.get(k);
+      const empty = { month:'', day:0, dayName:'', ganzhi:'', leap:false };
+      if (!lunarFmt){ lunarCache.set(k, empty); return empty; }
+      try {
+        const parts = lunarFmt.formatToParts(new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12));
+        const get = t => { const p = parts.find(x => x.type === t); return p ? p.value : ''; };
+        const month = get('month') || '';
+        const day = Number(get('day')) || 0;
+        const v = { month: month, day: day, dayName: LDAY[day] || (day ? '初' + day : ''),
+          ganzhi: get('yearName') || '', leap: month.indexOf('闰') === 0 };
+        lunarCache.set(k, v);
+        return v;
+      } catch(e){ lunarCache.set(k, empty); return empty; }
+    }
+    function solarFest(d){ return SOLAR_FEST[(d.getMonth()+1) + '-' + d.getDate()] || ''; }
+    function lunarFest(d){
+      const l = lunarOf(d);
+      if (!l.month) return '';
+      const next = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1, 12);
+      const nl = lunarOf(next);
+      if (nl.month === '正月' && nl.day === 1) return '除夕';
+      if (l.leap) return '';
+      return LUNAR_FEST[l.month + '-' + l.day] || '';
+    }
+
+    /* 太阳视黄经（Meeus 低精度式），用于精确定位节气时刻 */
+    function sunLong(jd){
+      const T = (jd - 2451545.0) / 36525;
+      const L0 = 280.46646 + 36000.76983*T + 0.0003032*T*T;
+      const M = (357.52911 + 35999.05029*T - 0.0001537*T*T) * RAD;
+      const C = (1.914602 - 0.004817*T - 0.000014*T*T) * Math.sin(M)
+              + (0.019993 - 0.000101*T) * Math.sin(2*M)
+              + 0.000289 * Math.sin(3*M);
+      const O = (125.04 - 1934.136*T) * RAD;
+      return ((L0 + C - 0.00569 - 0.00478*Math.sin(O)) % 360 + 360) % 360;
+    }
+    function angDiff(a,b){ return (((a - b + 540) % 360) + 360) % 360 - 180; }
+    const termCache = new Map();
+    function termsOfMonth(y,m){
+      const key = y + '-' + m;
+      if (termCache.has(key)) return termCache.get(key);
+      const out = {};
+      if (y >= MIN_Y && y <= MAX_Y){
+        /* 北京时间当月 1 日 00:00 对应的儒略日 */
+        const jd0 = Date.UTC(y, m, 1, -8) / 86400000 + 2440587.5;
+        for (let k = 0; k < 2; k++){
+          const idx = m*2 + k;
+          const deg = (285 + idx*15) % 360;
+          let prev = angDiff(sunLong(jd0), deg), lo = 0, hi = 0, found = false;
+          for (let t = 0.25; t <= 40; t += 0.25){
+            const cur = angDiff(sunLong(jd0 + t), deg);
+            if (prev < 0 && cur >= 0){ lo = t - 0.25; hi = t; found = true; break; }
+            prev = cur;
+          }
+          if (!found) continue;
+          for (let i = 0; i < 36; i++){
+            const mid = (lo + hi) / 2;
+            if (angDiff(sunLong(jd0 + mid), deg) >= 0) hi = mid; else lo = mid;
+          }
+          const dt = new Date((jd0 + hi - 2440587.5) * 86400000 + 8*3600000);
+          if (dt.getUTCMonth() === m) out[dt.getUTCDate()] = TERMS[idx];
+        }
+      }
+      termCache.set(key, out);
+      return out;
+    }
+    function dayTags(d){
+      const tags = [];
+      const lf = lunarFest(d), sf = solarFest(d), tm = termsOfMonth(d.getFullYear(), d.getMonth())[d.getDate()];
+      if (lf) tags.push({ t: lf, k: 'fest' });
+      if (sf) tags.push({ t: sf, k: 'fest' });
+      if (tm) tags.push({ t: tm, k: 'term' });
+      return tags;
+    }
+    function dayInfo(d){
+      const tags = dayTags(d);
+      if (tags.length) return { text: tags[0].t.slice(0, 4), kind: tags[0].k };
+      const l = lunarOf(d);
+      if (l.day === 1 && l.month) return { text: l.month, kind: '' };
+      return { text: l.dayName, kind: '' };
+    }
+
+    const root = $('#calRoot');
+    if (!root) return;
+    const now0 = new Date();
+    let viewY = now0.getFullYear(), viewM = now0.getMonth(), selKey = keyOf(now0);
+    let lastDayKey = '', calMoved = false;
+    function pad(n){ return String(n).padStart(2, '0'); }
+
+    function renderFoot(){
+      const p = selKey.split('-').map(Number);
+      const d = new Date(p[0], p[1]-1, p[2], 12);
+      const l = lunarOf(d);
+      $('#calSelTitle').textContent = p[0] + '年' + p[1] + '月' + p[2] + '日 · 星期' + WD[d.getDay()];
+      $('#calSelLunar').textContent = l.month
+        ? '农历' + l.month + l.dayName + (l.ganzhi ? ' · ' + l.ganzhi + '年【' + (ZODIAC[l.ganzhi.charAt(1)] || '') + '】' : '')
+        : '点日期可查看当日详情';
+      const tags = dayTags(d).map(x => x.t);
+      $('#calSelTags').textContent = tags.length ? '◆ ' + tags.join(' · ') : '';
+    }
+    function render(){
+      const y = viewY, m = viewM;
+      $('#calYM').textContent = y + '年' + (m+1) + '月';
+      const l0 = lunarOf(new Date(y, m, 1, 12));
+      $('#calYZ').textContent = (l0.ganzhi ? l0.ganzhi + '年【' + (ZODIAC[l0.ganzhi.charAt(1)] || '') + '】 · ' : '')
+        + (l0.month ? '农历' + l0.month : '公历万年历');
+      const first = new Date(y, m, 1);
+      const todayKey = keyOf(new Date());
+      let html = WD.map((w,i) => '<div class="cal-wd' + (i === 0 || i === 6 ? ' we' : '') + '">' + w + '</div>').join('');
+      for (let i = 0; i < 42; i++){
+        const d = new Date(y, m, 1 - first.getDay() + i);
+        const dd = d.getDate(), k = keyOf(d), info = dayInfo(d);
+        const cls = ['cal-cell'];
+        if (d.getMonth() !== m) cls.push('out');
+        if (d.getDay() === 0 || d.getDay() === 6) cls.push('we');
+        if (info.kind) cls.push(info.kind);
+        if (k === todayKey) cls.push('today');
+        if (k === selKey) cls.push('sel');
+        html += '<button type="button" class="' + cls.join(' ') + '" data-cal-day="' + k + '"'
+          + ' aria-label="' + d.getFullYear() + '年' + (d.getMonth()+1) + '月' + dd + '日' + (info.text ? ' ' + info.text : '') + '">'
+          + '<span class="n">' + dd + '</span><span class="s">' + esc(info.text) + '</span></button>';
+      }
+      $('#calGrid').innerHTML = html;
+      $$('#calGrid [data-cal-day]').forEach(btn => btn.addEventListener('click', () => {
+        const p = btn.dataset.calDay.split('-').map(Number);
+        selKey = btn.dataset.calDay;
+        viewY = p[0]; viewM = p[1] - 1;
+        calMoved = true;
+        render();
+      }));
+      $$('.cal-nav [data-cal-step]').forEach(b => {
+        const step = Number(b.dataset.calStep);
+        b.disabled = (step < 0 && y*12 + m + step < MIN_Y*12)
+          || (step > 0 && y*12 + m + step > MAX_Y*12 + 11);
+      });
+      renderFoot();
+    }
+    function tick(){
+      const n = new Date();
+      $('#calHM').textContent = pad(n.getHours()) + ':' + pad(n.getMinutes());
+      $('#calSec').textContent = ':' + pad(n.getSeconds());
+      const dk = keyOf(n);
+      if (dk === lastDayKey) return;
+      lastDayKey = dk;
+      $('#calBadgeMon').textContent = (n.getMonth()+1) + '月';
+      $('#calBadgeDay').textContent = n.getDate();
+      $('#calDate').textContent = (n.getMonth()+1) + '月' + n.getDate() + '日 星期' + WD[n.getDay()];
+      const l = lunarOf(n);
+      $('#calLunar').textContent = l.month
+        ? '农历' + l.month + l.dayName + ' · ' + l.ganzhi + '年【' + (ZODIAC[l.ganzhi.charAt(1)] || '') + '】'
+        : '点击打开万年历';
+      if (!calMoved){ viewY = n.getFullYear(); viewM = n.getMonth(); }
+      if (root.classList.contains('open')) render();
+    }
+    function setOpen(on){
+      root.classList.toggle('open', on);
+      document.body.classList.toggle('cal-open', on);
+      $('#calChip').setAttribute('aria-expanded', String(on));
+      if (on) render();
+      else $('#calJump').classList.remove('show');
+    }
+
+    $('#calJumpMonth').innerHTML = Array.from({length:12}, (_,i) => '<option value="' + i + '">' + (i+1) + '月</option>').join('');
+    $('#calChip').addEventListener('click', e => { e.stopPropagation(); setOpen(!root.classList.contains('open')); });
+    $('#calPop').addEventListener('click', e => e.stopPropagation());
+    document.addEventListener('click', () => { if (root.classList.contains('open')) setOpen(false); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && root.classList.contains('open')){ setOpen(false); $('#calChip').focus(); }
+    });
+    $$('.cal-nav [data-cal-step]').forEach(b => b.addEventListener('click', () => {
+      const idx = Math.max(MIN_Y*12, Math.min(MAX_Y*12 + 11, viewY*12 + viewM + Number(b.dataset.calStep)));
+      viewY = Math.floor(idx / 12); viewM = idx % 12;
+      calMoved = true;
+      render();
+    }));
+    $('#calToday').addEventListener('click', () => {
+      const n = new Date();
+      viewY = n.getFullYear(); viewM = n.getMonth(); selKey = keyOf(n); calMoved = false;
+      render();
+    });
+    $('#calTitle').addEventListener('click', () => {
+      const box = $('#calJump');
+      box.classList.toggle('show');
+      if (box.classList.contains('show')){
+        $('#calJumpYear').value = viewY;
+        $('#calJumpMonth').value = String(viewM);
+        $('#calJumpYear').focus();
+      }
+    });
+    $('#calJump').addEventListener('submit', e => {
+      e.preventDefault();
+      viewY = Math.max(MIN_Y, Math.min(MAX_Y, Math.round(Number($('#calJumpYear').value) || viewY)));
+      viewM = Math.max(0, Math.min(11, Number($('#calJumpMonth').value)));
+      calMoved = true;
+      $('#calJump').classList.remove('show');
+      render();
+    });
+
+    render();
+    tick();
+    setInterval(tick, 1000);
+  })();
 
   /* ---------- 启动 ---------- */
   buildWallList();
