@@ -271,6 +271,30 @@
   .search-history button:hover{background:#F2F7FD;color:var(--accent)}
   .search-history svg{flex:0 0 12px;color:#B4BDC6}
   .search-history .empty{padding:12px 10px;font-size:12px;color:#A7AFB7}
+  .search-history button.active{background:#E8F2FF;color:var(--accent)}
+  .search-history .sug-title{
+    padding:8px 10px 3px;
+    font-size:11px;
+    color:#98A2AE;
+    letter-spacing:.4px;
+  }
+  .search-history .sug-tag{margin-left:auto;font-size:10px;opacity:.62}
+  /* 深色主题下的引擎菜单与联想下拉 */
+  html[data-theme="dark"] .engine-menu,
+  html[data-theme="dark"] .search-history{
+    background:#0E2743;
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 14px 40px rgba(0,0,0,.55);
+  }
+  html[data-theme="dark"] .engine-item,
+  html[data-theme="dark"] .search-history button{color:#DCE8F7}
+  html[data-theme="dark"] .engine-item:hover,
+  html[data-theme="dark"] .engine-item.active,
+  html[data-theme="dark"] .search-history button:hover,
+  html[data-theme="dark"] .search-history button.active{background:rgba(90,160,255,.2);color:#fff}
+  html[data-theme="dark"] .search-history .empty,
+  html[data-theme="dark"] .search-history .sug-title{color:rgba(220,232,247,.55)}
+  html[data-theme="dark"] .search-history svg{color:rgba(220,232,247,.5)}
 
   /* ---------- 主页天气 ---------- */
   /* 搜索框下的小天气条已由下方完整天气面板取代 */
@@ -1286,13 +1310,14 @@
               <div class="kbd-list">
                 <div class="kbd-line"><span>聚焦搜索框</span><kbd>/</kbd></div>
                 <div class="kbd-line"><span>开始搜索</span><kbd>Enter</kbd></div>
+                <div class="kbd-line"><span>选择联想词</span><kbd>↑</kbd> <kbd>↓</kbd></div>
                 <div class="kbd-line"><span>关闭设置 / 编辑弹窗</span><kbd>Esc</kbd></div>
                 <div class="kbd-line"><span>退出待机页</span><span style="font-size:11.5px;color:#9AA3AC">单击 · 滚动 · 任意按键</span></div>
               </div>
             </div>
             <div class="card">
               <h3>本地存储</h3>
-              <p class="mini-note">所有图标、设置与搜索记录只保存在这台电脑的浏览器本地，不会上传到任何服务器。</p>
+              <p class="mini-note">所有图标、设置与搜索记录只保存在这台电脑的浏览器本地。开启「搜索联想」时，输入的内容会发送给百度联想接口用于返回候选词，除此之外不会上传到任何服务器。</p>
             </div>
           </div>
         </div>
@@ -1307,24 +1332,27 @@
               <h3>搜索</h3>
               <div class="row"><span class="lbl">搜索引擎</span>
                 <span class="sel-wrap"><select class="sel" data-select="engine">
-                  <option value="google">谷歌</option>
-                  <option value="bing">必应</option>
-                  <option value="yahoo">雅虎</option>
                   <option value="baidu">百度</option>
+                  <option value="sogou">搜狗搜索</option>
+                  <option value="so360">360搜索</option>
+                  <option value="quark">夸克搜索</option>
+                  <option value="bing">必应</option>
+                  <option value="google">谷歌</option>
+                  <option value="yahoo">雅虎</option>
                   <option value="yandex">扬德克斯</option>
                   <option value="duckduckgo">鸭鸭搜索</option>
-                  <option value="edge">微软搜索</option>
                 </select></span>
               </div>
               <div class="row"><span class="lbl">打开方式</span>
                 <span class="sel-wrap"><select class="sel" data-select="newTab"><option value="0">当前标签页</option><option value="1">新标签页</option></select></span>
               </div>
+              <div class="row"><span class="lbl">搜索联想</span><button class="switch" data-toggle="suggest" aria-checked="true"></button></div>
               <div class="row"><span class="lbl">搜索历史记录</span><button class="switch" data-toggle="history" aria-checked="true"></button></div>
-              <p class="hint">保存最近 5 条搜索记录，仅存储在本页本地。关闭后不再记录并清空已有记录。</p>
+              <p class="hint">输入时显示中文联想词，按 <kbd>↑</kbd> <kbd>↓</kbd> 选择、<kbd>Enter</kbd> 搜索。联想词由百度公开接口提供，输入内容会发送给百度；关闭后只显示本地记录。历史记录最多 5 条，仅存在本页本地，关闭后会清空。</p>
             </div>
             <div class="card">
               <h3>提示</h3>
-              <p class="mini-note">按 <kbd>/</kbd> 可直接聚焦搜索框；输入后按 <kbd>Enter</kbd> 使用当前选中的搜索引擎搜索。</p>
+              <p class="mini-note">按 <kbd>/</kbd> 聚焦搜索框；<kbd>↑</kbd> <kbd>↓</kbd> 选择联想词，<kbd>Enter</kbd> 使用当前选中的搜索引擎搜索，<kbd>Esc</kbd> 收起下拉。</p>
             </div>
           </div>
           <div>
@@ -1544,15 +1572,18 @@
 
   /* 搜索引擎：界面一律用中文名称与汉字角标，不再显示英文品牌字母。 */
   const ENGINES = {
-    google:     { name:'谷歌',     mark:'谷', color:'#4285F4', url:'https://www.google.com/search?q=' },
-    bing:       { name:'必应',     mark:'必', color:'#008373', url:'https://www.bing.com/search?q=' },
-    yahoo:      { name:'雅虎',     mark:'雅', color:'#6001D2', url:'https://search.yahoo.com/search?p=' },
     baidu:      { name:'百度',     mark:'百', color:'#2932E1', url:'https://www.baidu.com/s?wd=' },
+    sogou:      { name:'搜狗搜索', mark:'搜', color:'#F56C2D', url:'https://www.sogou.com/web?query=' },
+    so360:      { name:'360搜索',  mark:'三', color:'#19B955', url:'https://www.so.com/s?q=' },
+    quark:      { name:'夸克搜索', mark:'夸', color:'#5B6BFF', url:'https://quark.sm.cn/s?q=' },
+    bing:       { name:'必应',     mark:'必', color:'#008373', url:'https://www.bing.com/search?q=' },
+    google:     { name:'谷歌',     mark:'谷', color:'#4285F4', url:'https://www.google.com/search?q=' },
+    yahoo:      { name:'雅虎',     mark:'雅', color:'#6001D2', url:'https://search.yahoo.com/search?p=' },
     yandex:     { name:'扬德克斯', mark:'扬', color:'#FC3F1D', url:'https://yandex.com/search/?text=' },
-    duckduckgo: { name:'鸭鸭搜索', mark:'鸭', color:'#DE5833', url:'https://duckduckgo.com/?q=' },
-    edge:       { name:'微软搜索', mark:'微', color:'#0F6CBD', url:'https://www.bing.com/search?q=' }
+    duckduckgo: { name:'鸭鸭搜索', mark:'鸭', color:'#DE5833', url:'https://duckduckgo.com/?q=' }
   };
-  const ENGINE_ORDER = ['google','bing','yahoo','baidu','yandex','duckduckgo','edge'];
+  /* 已移除「微软搜索」：它和「必应」共用同一个 bing.com 搜索地址，属于重复项 */
+  const ENGINE_ORDER = ['baidu','sogou','so360','quark','bing','google','yahoo','yandex','duckduckgo'];
 
   const PAGE_WIDTHS = { full:'100%', wide:'1660px', normal:'1400px' };
 
@@ -1666,6 +1697,7 @@
       newTab: false,
       engine: 'bing',
       history: true,
+      suggest: true,
       editMode: false,
       standby: true,
       idleSec: 30,
@@ -1721,6 +1753,9 @@
       s.sitesVersion = SITES_VERSION;
       repaired = true;
     }
+    /* 自愈：移除已下线的重复引擎（「微软搜索」与必应同址），回退到必应 */
+    if (!ENGINES[s.engine]){ s.engine = 'bing'; repaired = true; }
+    if (typeof s.suggest !== 'boolean'){ s.suggest = true; repaired = true; }
     s.editMode = false;
     if (repaired){
       try {
@@ -2093,6 +2128,7 @@
   /* ---------- 搜索 ---------- */
   const searchInput = $('#searchInput');
   const historyBox = $('#searchHistory');
+  let sugSeq = 0, sugTimer = null, sugActive = -1, sugValues = [];
 
   function doSearch(q){
     q = (q || '').trim();
@@ -2109,41 +2145,113 @@
     else window.location.href = url;
   }
 
-  function showHistory(){
-    if (!state.history){ historyBox.classList.remove('open'); return; }
-    const h = getHistory();
-    if (!h.length){
-      historyBox.innerHTML = '<div class="empty">暂无搜索记录</div>';
+  function closeDrop(){
+    historyBox.classList.remove('open');
+    sugActive = -1;
+    sugValues = [];
+  }
+
+  /* 搜索联想：百度公开 JSONP 接口返回 UTF-8，无需密钥或后端；
+     失败/超时时静默退回本地记录，不影响正常搜索。 */
+  function fetchSuggest(q){
+    const seq = ++sugSeq;
+    const cb = '__msSug' + seq;
+    let done = false;
+    const finish = list => {
+      if (done) return;
+      done = true;
+      window[cb] = function(){};   /* 迟到的回调落到空函数，避免报错 */
+      setTimeout(() => { try { delete window[cb]; } catch (err) {} }, 30000);
+      if (seq === sugSeq && searchInput.value.trim() === q) renderDrop(list, q);
+    };
+    window[cb] = d => {
+      const list = [];
+      if (d && Array.isArray(d.g)) d.g.forEach(x => {
+        if (x && typeof x.q === 'string' && list.indexOf(x.q) < 0) list.push(x.q);
+      });
+      finish(list.slice(0, 8));
+    };
+    const s = document.createElement('script');
+    s.charset = 'utf-8';
+    s.src = 'https://www.baidu.com/sugrec?prod=pc&wd=' + encodeURIComponent(q) + '&cb=' + cb;
+    s.onerror = () => finish([]);
+    document.head.appendChild(s);
+    setTimeout(() => { try { s.remove(); } catch (err) {} finish([]); }, 2800);
+  }
+
+  const ICON_SEARCH = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>';
+  const ICON_CLOCK = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+
+  function renderDrop(remote, q){
+    const key = (q || '').trim();
+    const en = ENGINES[state.engine] || ENGINES.bing;
+    const rows = [];
+    const seen = new Set([key]);
+    if (key) rows.push({ q:key, kind:'direct' });
+    (remote || []).forEach(x => {
+      if (x && !seen.has(x) && rows.length < 12){ seen.add(x); rows.push({ q:x, kind:'sug' }); }
+    });
+    if (state.history) getHistory().forEach(x => {
+      if (x && !seen.has(x) && (!key || x.toLowerCase().indexOf(key.toLowerCase()) > -1) && rows.length < 16){
+        seen.add(x); rows.push({ q:x, kind:'hist' });
+      }
+    });
+    sugValues = rows.map(r => r.q);
+    sugActive = -1;
+    if (!rows.length){
+      historyBox.innerHTML = '<div class="empty">' + (key ? '按回车开始搜索' : '暂无搜索记录') + '</div>';
     } else {
-      historyBox.innerHTML = h.map(q =>
-        '<button type="button" data-q="' + esc(q) + '">'
-        + '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'
-        + '<span>' + esc(q) + '</span></button>'
-      ).join('');
+      let html = '', lastKind = 'direct';
+      const titles = { sug:'联想建议', hist:'搜索记录' };
+      rows.forEach((r, i) => {
+        if (r.kind !== lastKind && titles[r.kind]) html += '<div class="sug-title">' + titles[r.kind] + '</div>';
+        lastKind = r.kind;
+        const tag = r.kind === 'direct' ? '<span class="sug-tag">' + esc(en.name) + '</span>' : '';
+        html += '<button type="button" data-q="' + esc(r.q) + '" data-i="' + i + '">'
+          + (r.kind === 'hist' ? ICON_CLOCK : ICON_SEARCH)
+          + '<span>' + esc(r.q) + '</span>' + tag + '</button>';
+      });
+      historyBox.innerHTML = html;
       $$('#searchHistory button').forEach(b => {
         b.addEventListener('mousedown', e => {
           e.preventDefault();
-          searchInput.value = b.dataset.q;
-          historyBox.classList.remove('open');
-          doSearch(b.dataset.q);
+          const val = b.dataset.q;
+          searchInput.value = val;
+          closeDrop();
+          doSearch(val);
         });
+        b.addEventListener('mouseenter', () => setActive(Number(b.dataset.i)));
       });
     }
     historyBox.classList.add('open');
   }
 
+  function setActive(i){
+    sugActive = i;
+    $$('#searchHistory button').forEach(b => b.classList.toggle('active', Number(b.dataset.i) === i));
+  }
+
+  function onInput(){
+    sugSeq++;                          /* 作废旧请求 */
+    clearTimeout(sugTimer);
+    const q = searchInput.value.trim();
+    renderDrop([], q);                 /* 先即时显示本地项，联想词随后补上 */
+    if (q && state.suggest !== false) sugTimer = setTimeout(() => fetchSuggest(q), 200);
+  }
+
   $('#searchForm').addEventListener('submit', e => {
     e.preventDefault();
-    historyBox.classList.remove('open');
+    const val = (sugActive >= 0 && sugValues[sugActive]) ? sugValues[sugActive] : searchInput.value;
+    closeDrop();
     $('#engineMenu').classList.remove('open');
-    doSearch(searchInput.value);
+    doSearch(val);
   });
   $('#engineBtn').addEventListener('click', e => {
     e.preventDefault();
     e.stopPropagation();
     const box = $('#engineMenu');
     const willOpen = !box.classList.contains('open');
-    historyBox.classList.remove('open');
+    closeDrop();
     box.classList.toggle('open', willOpen);
   });
   $('#grid').addEventListener('contextmenu', e => {
@@ -2152,11 +2260,28 @@
       openEditor(null);
     }
   });
-  searchInput.addEventListener('focus', showHistory);
-  searchInput.addEventListener('input', showHistory);
-  searchInput.addEventListener('blur', () => setTimeout(() => historyBox.classList.remove('open'), 120));
+  searchInput.addEventListener('focus', onInput);
+  searchInput.addEventListener('input', onInput);
+  searchInput.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+      if (!historyBox.classList.contains('open') || !sugValues.length) return;
+      e.preventDefault();
+      const n = sugValues.length;
+      const i = e.key === 'ArrowDown'
+        ? (sugActive + 1) % n
+        : (sugActive <= 0 ? n - 1 : sugActive - 1);
+      setActive(i);
+      const btn = $$('#searchHistory button')[i];
+      if (btn && btn.scrollIntoView) btn.scrollIntoView({ block:'nearest' });
+    } else if (e.key === 'Escape' && historyBox.classList.contains('open')){
+      e.preventDefault();
+      e.stopPropagation();
+      closeDrop();
+    }
+  });
+  searchInput.addEventListener('blur', () => setTimeout(() => closeDrop(), 150));
   document.addEventListener('mousedown', e => {
-    if (!e.target.closest('#searchWrap')) historyBox.classList.remove('open');
+    if (!e.target.closest('#searchWrap')) closeDrop();
     if (!e.target.closest('#engineBtn') && !e.target.closest('#engineMenu')) $('#engineMenu').classList.remove('open');
   });
 
@@ -2713,6 +2838,7 @@
     const tag = document.activeElement ? document.activeElement.tagName : '';
     if (e.key === 'Escape'){
       if ($('#engineMenu').classList.contains('open')){ $('#engineMenu').classList.remove('open'); return; }
+      if (historyBox.classList.contains('open')){ closeDrop(); return; }
       if ($('#editorOverlay').classList.contains('open')){ closeEditor(); return; }
       if ($('#settingsOverlay').classList.contains('open')){ closeSettings(); return; }
       if ($('#standby').classList.contains('open')){ exitStandby(); return; }
