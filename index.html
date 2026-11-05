@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark" style="--page-bg: #003355; --standby-bg: #003355; --k: 1.15; --w-scale: 1; --h-scale: 1; --grid-gap: 8px; --home-max: 100%; --bs: 1.15; --ws: 1; --bsw: 600; --woff: 0px; --date-blur: 10px; --date-radius: 999px;"><head>
+<html lang="zh-CN" data-theme="dark">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="个人起始页：分类导航、多引擎搜索与实时天气，所有数据仅保存在本地浏览器。">
-<meta name="theme-color" content="#003355">
-<link rel="icon" href="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232F6FEB'/%3E%3Crect x='14' y='14' width='16' height='16' rx='4' fill='%23fff' opacity='.95'/%3E%3Crect x='34' y='14' width='16' height='16' rx='4' fill='%23fff' opacity='.72'/%3E%3Crect x='14' y='34' width='16' height='16' rx='4' fill='%23fff' opacity='.72'/%3E%3Crect x='34' y='34' width='16' height='16' rx='4' fill='%23fff' opacity='.5'/%3E%3C/svg%3E">
 <title>我的主页</title>
 <style>
   :root{
@@ -171,7 +169,7 @@
     border-radius:13px;
     background:conic-gradient(from var(--rainbow-angle),
       #ff0055,#ff8a00,#ffe600,#00e676,#00c8ff,#8a4dff,#ff0055);
-    filter:saturate(1.05) brightness(.97);
+    filter:saturate(1.3) brightness(1.05);
     z-index:0;
     animation:rainbowSpin 3.2s linear infinite;
     pointer-events:none;
@@ -283,7 +281,7 @@
   .grid-group{
     display:flex;
     flex-wrap:wrap;
-    justify-content:flex-start;
+    justify-content:center;
     gap:var(--grid-gap);
   }
   .cell{position:relative;display:flex}
@@ -631,8 +629,7 @@
   .set-body{
     flex:1;
     min-width:0;
-    overflow-y:
-auto;
+    overflow-y:auto;
     padding:24px 30px 40px;
     position:relative;
   }
@@ -1003,177 +1000,22 @@ auto;
     .home{margin-top:36px}
     .bs-desc{gap:12px}
   }
-  /* ---------- 分类标签 ---------- */
-  .cat-bar{
-    display:flex;flex-wrap:wrap;justify-content:center;
-    gap:10px;
-    width:100%;
-    margin-top:36px;
-  }
-  body.layout-compact .cat-bar{margin-top:30px}
-  .cat-tab{
-    display:inline-flex;align-items:center;gap:7px;
-    height:34px;padding:0 14px;
-    border-radius:999px;
-    background:rgba(255,255,255,.6);
-    border:1px solid rgba(15,23,42,.08);
-    color:#3D4650;
-    font-size:13px;
-    cursor:pointer;
-    transition:transform .16s ease,background .16s,border-color .16s,box-shadow .16s,color .16s;
-  }
-  .cat-tab:hover{transform:translateY(-1px);border-color:rgba(47,111,235,.45)}
-  .cat-tab .n{
-    min-width:20px;height:18px;padding:0 6px;
-    display:inline-grid;place-items:center;
-    border-radius:999px;
-    background:rgba(15,23,42,.06);
-    font-size:11px;font-weight:600;color:#5B6470;
-  }
-  .cat-tab.active{
-    background:linear-gradient(135deg,#3B82F6,#2458D0);
-    border-color:transparent;color:#fff;
-    box-shadow:0 6px 16px rgba(47,111,235,.35);
-  }
-  .cat-tab.active .n{background:rgba(255,255,255,.24);color:#fff}
-  html[data-theme="dark"] .cat-tab{
-    background:rgba(255,255,255,.07);
-    border-color:rgba(255,255,255,.16);
-    color:rgba(255,255,255,.82);
-  }
-  html[data-theme="dark"] .cat-tab .n{background:rgba(255,255,255,.12);color:rgba(255,255,255,.72)}
-  html[data-theme="dark"] .cat-tab.active{
-    background:linear-gradient(135deg,#3B82F6,#2458D0);
-    box-shadow:0 8px 22px rgba(36,88,208,.5),inset 0 1px 0 rgba(255,255,255,.25);
-    color:#fff;border-color:rgba(140,180,255,.4);
-  }
-
-  /* ---------- 天气面板 ---------- */
-  .wpanel{
-    width:100%;
-    margin-top:36px;
-    margin-bottom:26px;
-    display:grid;
-    grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);
-    gap:14px;
-    position:relative;
-  }
-  body.no-weather .wpanel{display:none}
-  .wp-card{
-    border-radius:16px;
-    background:rgba(255,255,255,.78);
-    border:1px solid rgba(15,23,42,.07);
-    box-shadow:0 8px 26px rgba(16,24,40,.08);
-    padding:16px 18px;
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-  }
-  html[data-theme="dark"] .wp-card{
-    background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045));
-    border:1px solid rgba(255,255,255,.15);
-    box-shadow:0 10px 30px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.09);
-    color:rgba(255,255,255,.94);
-  }
-  .wp-main{display:flex;flex-direction:column;min-width:0}
-  .wp-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
-  .wp-loc{display:flex;align-items:center;gap:10px;min-width:0;flex-wrap:wrap}
-  .wp-city{font-size:14px;font-weight:600;white-space:nowrap}
-  .wp-city svg{width:13px;height:13px;vertical-align:-1.5px;margin-right:4px;opacity:.75}
-  .wp-aqi{height:20px;padding:0 8px;display:inline-grid;place-items:center;border-radius:999px;font-size:11px;font-weight:600;border:1px solid transparent;white-space:nowrap}
-  .wp-chips{display:flex;gap:6px;flex-wrap:wrap}
-  .wp-chip{
-    height:22px;padding:0 9px;border-radius:999px;
-    border:1px solid rgba(125,140,160,.35);
-    background:transparent;color:inherit;
-    font-size:11px;cursor:pointer;opacity:.75;
-    transition:all .15s;
-  }
-  .wp-chip:hover{opacity:1;border-color:rgba(47,111,235,.5)}
-  .wp-chip.on{background:rgba(47,111,235,.14);border-color:rgba(47,111,235,.5);color:#2F6FEB;opacity:1;font-weight:600}
-  html[data-theme="dark"] .wp-chip.on{background:rgba(96,150,255,.18);border-color:rgba(120,165,255,.55);color:#9DC0FF}
-  .wp-head-right{display:flex;align-items:center;gap:10px;flex:0 0 auto}
-  .wp-time{font-size:12px;opacity:.6;white-space:nowrap}
-  .wp-unit{
-    height:24px;min-width:44px;padding:0 8px;
-    border-radius:999px;border:1px solid rgba(125,140,160,.35);
-    background:transparent;color:inherit;
-    font-size:12px;font-weight:600;cursor:pointer;
-    transition:all .15s;
-  }
-  .wp-unit:hover{border-color:#2F6FEB;color:#2F6FEB}
-  .wp-now{display:flex;align-items:center;gap:18px;padding:10px 0 6px}
-  .wp-now>svg{width:76px;height:76px;flex:0 0 auto}
-  .wp-big{font-size:54px;font-weight:200;line-height:1;letter-spacing:-2px;font-family:"Segoe UI Light","Segoe UI",-apple-system,sans-serif;white-space:nowrap}
-  .wp-cond{display:flex;flex-direction:column;gap:4px;min-width:0}
-  .wp-cond b{font-size:16px;font-weight:600}
-  .wp-cond span{font-size:12.5px;opacity:.65;white-space:nowrap}
-  .wp-daily{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}
-  .wp-day{
-    display:flex;flex-direction:column;align-items:center;gap:4px;
-    padding:10px 2px 9px;border-radius:11px;
-    background:rgba(125,140,160,.07);
-    font-size:12px;
-    transition:background .15s;
-  }
-  .wp-day:hover{background:rgba(125,140,160,.13)}
-  .wp-day.today{background:rgba(47,111,235,.1)}
-  .wp-day .dn{opacity:.65;font-size:11.5px}
-  .wp-day svg{width:30px;height:30px}
-  .wp-day .dc{font-size:11.5px;opacity:.85;line-height:1.15;white-space:nowrap}
-  .wp-day .dts{display:flex;align-items:baseline;gap:5px}
-  .wp-day .dt{font-weight:600}
-  .wp-day .ds{opacity:.55;font-size:11px}
-  .wp-hourly{margin-top:12px}
-  .wp-hourly svg{width:100%;height:112px;display:block}
-  .wp-hourly polyline{fill:none;stroke:#2F6FEB;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .wp-hourly .harea{fill:rgba(47,111,235,.1)}
-  .wp-hourly .hdot{fill:#2F6FEB}
-  .wp-hourly text{font-size:10.5px;fill:currentColor;opacity:.62}
-  .wp-hourly .hpre{fill:#3B9EFF;opacity:.85;font-weight:600}
-  html[data-theme="dark"] .wp-hourly polyline{stroke:#6EA8FF}
-  html[data-theme="dark"] .wp-hourly .harea{fill:rgba(110,168,255,.13)}
-  html[data-theme="dark"] .wp-hourly .hdot{fill:#6EA8FF}
-  html[data-theme="dark"] .wp-hourly .hpre{fill:#8CBFFF}
-  .wp-side{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .wp-metric{display:flex;flex-direction:column;gap:7px;min-width:0}
-  .wp-metric h4{
-    display:flex;align-items:center;justify-content:space-between;
-    font-size:12px;font-weight:600;opacity:.72;margin:0;
-  }
-  .wp-metric h4 .arr{opacity:.4;font-size:13px}
-  .wp-mval{font-size:22px;font-weight:650;letter-spacing:-.3px;line-height:1.15}
-  .wp-mval small{font-size:11px;font-weight:400;opacity:.6;letter-spacing:0}
-  .wp-msub{font-size:11.5px;opacity:.62}
-  .wp-bars{display:flex;align-items:flex-end;gap:3px;height:30px;margin-top:1px}
-  .wp-bars i{flex:1;border-radius:2px 2px 0 0;background:linear-gradient(180deg,#5B9BFF,#2F6FEB);opacity:.85;min-height:3px}
-  .sunline{stroke:rgba(125,140,160,.5);stroke-width:1.6;fill:none}
-  .sunbase{stroke:rgba(125,140,160,.35);stroke-width:1}
-  .wp-sunrow{display:flex;justify-content:space-between;font-size:11px;opacity:.72;margin-top:2px;white-space:nowrap;gap:6px}
-  .wp-src{position:absolute;right:4px;bottom:-22px;font-size:11px;opacity:.45;pointer-events:none}
-  .wp-empty{display:flex;align-items:center;justify-content:center;min-height:130px;opacity:.55;font-size:13px;width:100%}
-  a.tile:focus-visible,button:focus-visible,.cat-tab:focus-visible{outline:2px solid #2F6FEB;outline-offset:2px}
-  @media (max-width: 900px){
-    .wpanel{grid-template-columns:1fr}
-    .wp-big{font-size:44px}
-    .wp-daily{grid-template-columns:repeat(7,minmax(0,1fr))}
-    .wp-cond span{white-space:normal}
-  }
 </style>
 </head>
-<body class="layout-classic" data-wpos="center">
+<body class="layout-classic">
 
 <div class="page">
   <div class="topbar">
     <div class="top-pill">
-      <button id="btnTheme" title="切换到浅色主题" aria-label="切换主题"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg></button>
+      <button id="btnTheme" title="切换深浅主题" aria-label="切换主题"></button>
       <button id="btnEdit" title="编辑图标" aria-label="编辑图标">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
       </button>
       <button id="btnStandby" title="进入待机页" aria-label="待机页">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
       </button>
       <button id="btnSettings" title="设置" aria-label="设置">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"></path></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
       </button>
     </div>
   </div>
@@ -1181,55 +1023,24 @@ auto;
   <main class="home">
     <div class="search-wrap" id="searchWrap">
       <form class="search" id="searchForm" autocomplete="off">
-        <button type="button" class="engine-btn" id="engineBtn" aria-label="切换搜索引擎" aria-haspopup="true" title="当前搜索引擎：Bing"><span class="engine-mark" style="background:#008373">b</span></button>
+        <button type="button" class="engine-btn" id="engineBtn" aria-label="切换搜索引擎" aria-haspopup="true"></button>
         <input id="searchInput" type="text" placeholder="搜索" aria-label="搜索">
       </form>
       <div class="search-history" id="searchHistory"></div>
-      <div class="engine-menu" id="engineMenu"><button type="button" class="engine-item" data-engine="google"><span class="engine-mark" style="background:#4285F4">G</span><span>Google</span></button><button type="button" class="engine-item active" data-engine="bing"><span class="engine-mark" style="background:#008373">b</span><span>Bing</span><svg class="check" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></button><button type="button" class="engine-item" data-engine="yahoo"><span class="engine-mark" style="background:#6001D2">Y</span><span>Yahoo</span></button><button type="button" class="engine-item" data-engine="baidu"><span class="engine-mark" style="background:#2932E1">百</span><span>Baidu</span></button><button type="button" class="engine-item" data-engine="yandex"><span class="engine-mark" style="background:#FC3F1D">Я</span><span>Yandex</span></button><button type="button" class="engine-item" data-engine="duckduckgo"><span class="engine-mark" style="background:#DE5833">D</span><span>DuckDuckGo</span></button><button type="button" class="engine-item" data-engine="edge"><span class="engine-mark" style="background:#0F6CBD">e</span><span>Edge</span></button></div>
+      <div class="engine-menu" id="engineMenu"></div>
     </div>
 
-    <div class="cat-bar" id="catBar" role="tablist" aria-label="图标分类"></div>
-
-    <div class="grid" id="grid"><div class="grid-group"><div class="cell"><a class="tile" href="http://crm.zhanchen.cn:8885/#/mixed-page/view/MXP00005" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#2979FF">订单</span><span class="tile-name">订单管理</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://wx.qq.com/?lang=zh_CN" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#07C160">微信</span><span class="tile-name">微信网页版</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://ai.taobao.com/?pid=mm_1042050059_1426300057_110172600194&amp;union_lens=lensId%3APUB%401585387134%400b0af5b7_0e21_171206fdf73_047b%4001" target="_self" rel="noopener"><span class="tile-icon" style="--c:#FF5000">淘</span><span class="tile-name">爱淘宝</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.zhihu.com/" target="_self" rel="noopener"><span class="tile-icon" style="--c:#0084FF">知</span><span class="tile-name">知乎</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.ctrip.com/" target="_self" rel="noopener"><span class="tile-icon" style="--c:#287DFA">携</span><span class="tile-name">携程</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.toutiao.com/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#F04142">今日</span><span class="tile-name">今日头条</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://map.baidu.com/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#2A6BE0">地图</span><span class="tile-name">百度地图</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="edge://extensions/?id=copeiejfefagfmjndfgbllokphlmalon" target="_self" rel="noopener"><span class="tile-icon" style="--c:#2F6FEB">扩</span><span class="tile-name">扩展</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.52pojie.cn/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#0B5FFF">吾爱</span><span class="tile-name">吾爱破解</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="http://www.ypojie.com/" target="_self" rel="noopener"><span class="tile-icon" style="--c:#5B8DEF">易</span><span class="tile-name">易破解</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.ansky.com/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#2F80ED">12</span><span class="tile-name">聚问天空</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.gndown.com/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#1FA463">绿软</span><span class="tile-name">绿软小站</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.xitmi.com/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#2F6FEB">系统</span><span class="tile-name">系统迷</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.mefcl.com/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#4A90E2">me</span><span class="tile-name">mefcl</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="http://www.dayanzai.me/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#2AA9E0">大眼</span><span class="tile-name">大眼仔旭</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="http://www.zxcs.me/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#4C6EF5">知轩</span><span class="tile-name">知轩藏书</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="http://rmocse.chinasafety.ac.cn/Main.aspx" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#2D7FF9">注册</span><span class="tile-name">注册安全工程师</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://copilot.microsoft.com/" target="_self" rel="noopener"><span class="tile-icon" style="--c:#0067B8">M</span><span class="tile-name">Microsoft</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="http://180.168.211.50:9080/sbwp_sh/identify.do?method=login" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#D93A3A">上海</span><span class="tile-name">上海危爆</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://club.excelhome.net/forum.php" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#217346">EH</span><span class="tile-name">ExcelHome</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.youxiaohou.com/install.html#%F0%9F%9A%80-%E9%80%9F%E5%BA%A6%E6%B5%8B%E8%AF%95" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#8B5CF6">网盘</span><span class="tile-name">网盘直链</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.umu.cn/index#/index" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#0EA5A4">珠海</span><span class="tile-name">珠海展辰</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://juhepan.cn/
-" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#6A5ACD">聚合</span><span class="tile-name">聚合网盘</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="http://blts.x3322.net/index/userstore/add.html" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#8B5CF6">添加</span><span class="tile-name">添加配置</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://dongai.shop/chat" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#E5484D">东东</span><span class="tile-name">东东AI商店</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="http://47.116.73.91:65533/index.php/#/plan" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#E5A11C">OK</span><span class="tile-name">OKZTWO</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.lanrenexcel.com/excel-functions-list/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#21A366">EX</span><span class="tile-name">Excel函数</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.anfuns.cc/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#E5484D">An</span><span class="tile-name">AnFuns</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="http://111.180.204.129:8848/web" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#E5484D">文库</span><span class="tile-name">文库下载</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="http://118.178.194.25/filerecv/index.html?from=soft" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#07C160">微信</span><span class="tile-name">微信图片</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://docs.qq.com/sheet/DU2RwWmZRUFFHZm5Z?tab=7jwf92" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#22B573">发货</span><span class="tile-name">发货计划</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://msdn.sjjzm.com/win11.html" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#7C5CFC">Wi</span><span class="tile-name">MSDN</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://github.com/lizongying/my-tv" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#171515">GH</span><span class="tile-name">my-tv</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="http://101.227.181.188:8088/ajpt/login.html" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#22B573">统一</span><span class="tile-name">统一登录</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://lyrics.run/my-tv-0.html" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#2F80ED">我的</span><span class="tile-name">我的電視</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="http://youhou.tamao.fun/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#3B4252">塔猫</span><span class="tile-name">塔猫</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.dyttcn.com/#" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#2F3640">电影</span><span class="tile-name">电影天堂</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://www.xitmi.com/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#2F6FEB">系统</span><span class="tile-name">系统迷</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://hy.oxah.cn/user" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#E5484D">度云</span><span class="tile-name">度云</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://d.itadn.com/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#F5A623">co</span><span class="tile-name">codn</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="http://118.178.194.25/filerecv/index.html?from=soft" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#E5484D">文件</span><span class="tile-name">文件接收</span></a><button type="button" class="del" title="删除">×</button></div><div class="cell"><a class="tile" href="https://192.168.1.7/" target="_self" rel="noopener"><span class="tile-icon two" style="--c:#E5484D">飞牛</span><span class="tile-name">飞牛</span></a><button type="button" class="del" title="删除">×</button></div><button type="button" class="tile add"><span class="plus">+</span><span class="add-label">添加</span></button></div></div>
+    <div class="grid" id="grid"></div>
     <div class="edit-hint">编辑模式：点击图标修改，右上角 × 删除，点击「+ 添加」新增</div>
-
-    <section class="wpanel" id="wpanel" aria-label="天气面板">
-      <div class="wp-card wp-main">
-        <div class="wp-head">
-          <div class="wp-loc">
-            <span class="wp-city" id="wpCity">--</span>
-            <span class="wp-aqi" id="wpAqi" style="display:none"></span>
-            <span class="wp-chips" id="wpChips"></span>
-          </div>
-          <div class="wp-head-right">
-            <span class="wp-time" id="wpTime"></span>
-            <button type="button" class="wp-unit" id="wpUnit" title="切换温度单位">°C</button>
-          </div>
-        </div>
-        <div class="wp-now" id="wpNow"><div class="wp-empty">天气加载中…</div></div>
-        <div class="wp-daily" id="wpDaily"></div>
-        <div class="wp-hourly" id="wpHourly"></div>
-      </div>
-      <div class="wp-side">
-        <div class="wp-card wp-metric" id="mWind"></div>
-        <div class="wp-card wp-metric" id="mHum"></div>
-        <div class="wp-card wp-metric" id="mPress"></div>
-        <div class="wp-card wp-metric" id="mVis"></div>
-        <div class="wp-card wp-metric" id="mUv"></div>
-        <div class="wp-card wp-metric" id="mSun"></div>
-      </div>
-      <div class="wp-src">数据来源 Open-Meteo · 每 30 分钟自动更新</div>
-    </section>
   </main>
 </div>
 
 <!-- 待机页 -->
 <div class="standby" id="standby">
-  <div class="bs-clock" id="bsClock"><span id="bsTime">21:57:39</span><span class="ampm" id="bsAmPm"></span></div>
-  <div class="bs-date" id="bsDate">2026年11月3日星期二</div>
+  <div class="bs-clock" id="bsClock"><span id="bsTime">00:00:00</span><span class="ampm" id="bsAmPm"></span></div>
+  <div class="bs-date" id="bsDate"></div>
   <div class="bs-weather" id="bsWeather">
-    <div class="bs-cities" id="bsCities"><div class="bs-city"><div class="bs-wrow"><svg viewBox="0 0 48 48"><defs><linearGradient id="wfSun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"></stop><stop offset="1" stop-color="#ffb300"></stop></linearGradient><linearGradient id="wfCloud" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"></stop><stop offset="1" stop-color="#8fb0e6"></stop></linearGradient></defs><circle cx="24" cy="24" r="17" fill="rgba(255,196,0,.16)"></circle><circle cx="24" cy="24" r="9" fill="url(#wfSun)"></circle><g stroke="rgba(255,196,0,.85)" stroke-width="2.4" stroke-linecap="round"><path d="M24 4v5M24 39v5M4 24h5M39 24h5M10.5 10.5l3.5 3.5M34 34l3.5 3.5M37.5 10.5 34 14M14 34l-3.5 3.5"></path></g></svg><span class="bs-temp">11°</span></div><div class="bs-desc"><span class="bs-cname">北京</span><span>晴</span><span>5~17°</span></div></div></div>
+    <div class="bs-cities" id="bsCities"></div>
   </div>
   <div class="standby-hint">滚动或单击</div>
 </div>
@@ -1249,7 +1060,7 @@ auto;
     </aside>
     <div class="set-body">
       <button class="set-close" id="setClose" aria-label="关闭设置">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
       </button>
 
       <!-- 常规 -->
@@ -1262,7 +1073,6 @@ auto;
               <div class="row"><span class="lbl">显示搜索框</span><button class="switch" data-toggle="showSearch" aria-checked="true"></button></div>
               <div class="row"><span class="lbl">显示图标名称</span><button class="switch" data-toggle="showLabels" aria-checked="true"></button></div>
               <div class="row"><span class="lbl">显示添加入口</span><button class="switch" data-toggle="showAdd" aria-checked="true"></button></div>
-              <div class="row"><span class="lbl">显示天气面板</span><button class="switch" data-toggle="showWeather" aria-checked="true"></button></div>
               <div class="row"><span class="lbl">打开方式</span>
                 <span class="sel-wrap"><select class="sel" data-select="newTab"><option value="0">当前标签页</option><option value="1">新标签页</option></select></span>
               </div>
@@ -1328,7 +1138,7 @@ auto;
             </div>
             <div class="card">
               <h3>搜索记录</h3>
-              <div id="historyList" class="mini-note" style="margin-top:4px">暂无搜索记录</div>
+              <div id="historyList" class="mini-note" style="margin-top:4px"></div>
             </div>
           </div>
         </div>
@@ -1342,8 +1152,8 @@ auto;
             <div class="card">
               <h3>主题</h3>
               <div class="opts">
-                <button class="opt" data-theme-opt="light"><span class="pv" data-pv="theme-light"><svg viewBox="0 0 112 66"><rect width="112" height="66" fill="#F5F7F8"></rect><rect width="31" height="66" fill="#F7F8FA"></rect><rect y="18" width="31" height="10" fill="#1890FF"></rect><rect x="6" y="7" width="16" height="4" rx="1" fill="#C4CAD1"></rect><rect x="7" y="21" width="14" height="3" rx="1" fill="#FFFFFF"></rect><rect x="7" y="34" width="14" height="3" rx="1" fill="#C4CAD1"></rect><rect x="7" y="44" width="14" height="3" rx="1" fill="#C4CAD1"></rect><rect x="42" y="8" width="50" height="7" rx="1.5" fill="#FFFFFF" stroke="#E7EAEE"></rect><rect x="40" y="22" width="16" height="9" rx="2" fill="#FFFFFF" stroke="#E7EAEE"></rect><rect x="61" y="22" width="16" height="9" rx="2" fill="#FFFFFF" stroke="#E7EAEE"></rect><rect x="82" y="22" width="16" height="9" rx="2" fill="#FFFFFF" stroke="#E7EAEE"></rect><rect x="40" y="35" width="16" height="9" rx="2" fill="#FFFFFF" stroke="#E7EAEE"></rect><rect x="61" y="35" width="16" height="9" rx="2" fill="#FFFFFF" stroke="#E7EAEE"></rect><rect x="82" y="35" width="16" height="9" rx="2" fill="#FFFFFF" stroke="#E7EAEE"></rect><rect x="40" y="48" width="16" height="9" rx="2" fill="#FFFFFF" stroke="#E7EAEE"></rect><rect x="61" y="48" width="16" height="9" rx="2" fill="#FFFFFF" stroke="#E7EAEE"></rect><rect x="82" y="48" width="16" height="9" rx="2" fill="#FFFFFF" stroke="#E7EAEE"></rect></svg></span><span>浅色</span></button>
-                <button class="opt active" data-theme-opt="dark"><span class="pv" data-pv="theme-dark"><svg viewBox="0 0 112 66"><rect width="112" height="66" fill="#003355"></rect><rect width="31" height="66" fill="#0A3E62"></rect><rect y="18" width="31" height="10" fill="#1890FF"></rect><rect x="6" y="7" width="16" height="4" rx="1" fill="#4C7A99"></rect><rect x="7" y="21" width="14" height="3" rx="1" fill="#FFFFFF"></rect><rect x="7" y="34" width="14" height="3" rx="1" fill="#4C7A99"></rect><rect x="7" y="44" width="14" height="3" rx="1" fill="#4C7A99"></rect><rect x="42" y="8" width="50" height="7" rx="1.5" fill="#EDEFF2" stroke="#D8DDE2"></rect><rect x="40" y="22" width="16" height="9" rx="2" fill="#EDEFF2" stroke="#D8DDE2"></rect><rect x="61" y="22" width="16" height="9" rx="2" fill="#EDEFF2" stroke="#D8DDE2"></rect><rect x="82" y="22" width="16" height="9" rx="2" fill="#EDEFF2" stroke="#D8DDE2"></rect><rect x="40" y="35" width="16" height="9" rx="2" fill="#EDEFF2" stroke="#D8DDE2"></rect><rect x="61" y="35" width="16" height="9" rx="2" fill="#EDEFF2" stroke="#D8DDE2"></rect><rect x="82" y="35" width="16" height="9" rx="2" fill="#EDEFF2" stroke="#D8DDE2"></rect><rect x="40" y="48" width="16" height="9" rx="2" fill="#EDEFF2" stroke="#D8DDE2"></rect><rect x="61" y="48" width="16" height="9" rx="2" fill="#EDEFF2" stroke="#D8DDE2"></rect><rect x="82" y="48" width="16" height="9" rx="2" fill="#EDEFF2" stroke="#D8DDE2"></rect></svg></span><span>深色</span></button>
+                <button class="opt active" data-theme-opt="light"><span class="pv" data-pv="theme-light"></span><span>浅色</span></button>
+                <button class="opt" data-theme-opt="dark"><span class="pv" data-pv="theme-dark"></span><span>深色</span></button>
               </div>
               <div class="row" style="margin-top:16px"><span class="lbl">跟随系统</span><button class="switch" data-toggle="followSystem" aria-checked="false"></button></div>
             </div>
@@ -1355,7 +1165,7 @@ auto;
           <div>
             <div class="card">
               <h3>壁纸 · 纯色</h3>
-              <div class="wall-list" id="wallList"><button type="button" class="swatch" data-color="#F5F7F8" title="#F5F7F8" style="background: rgb(245, 247, 248);"></button><button type="button" class="swatch active" data-color="#003355" title="#003355" style="background: rgb(0, 51, 85);"></button><button type="button" class="swatch" data-color="#000000" title="#000000" style="background: rgb(0, 0, 0);"></button><button type="button" class="swatch" data-color="#FFFFFF" title="#FFFFFF" style="background: rgb(255, 255, 255);"></button><button type="button" class="swatch" data-color="#E5484D" title="#E5484D" style="background: rgb(229, 72, 77);"></button><button type="button" class="swatch" data-color="#F5A623" title="#F5A623" style="background: rgb(245, 166, 35);"></button><button type="button" class="swatch" data-color="#4CAF50" title="#4CAF50" style="background: rgb(76, 175, 80);"></button><button type="button" class="swatch" data-color="#2BB3A3" title="#2BB3A3" style="background: rgb(43, 179, 163);"></button><button type="button" class="swatch" data-color="#2F6FEB" title="#2F6FEB" style="background: rgb(47, 111, 235);"></button><button type="button" class="swatch" data-color="#8B5CF6" title="#8B5CF6" style="background: rgb(139, 92, 246);"></button><button type="button" class="swatch" data-color="#EC4899" title="#EC4899" style="background: rgb(236, 72, 153);"></button><button type="button" class="swatch" data-color="#64748B" title="#64748B" style="background: rgb(100, 116, 139);"></button></div>
+              <div class="wall-list" id="wallList"></div>
               <div class="hex-row">
                 <input id="bgHex" type="text" maxlength="7" spellcheck="false">
                 <button class="btn primary" id="applyBg">应用</button>
@@ -1374,11 +1184,10 @@ auto;
             <div class="card">
               <h3>主视图</h3>
               <div class="opts">
-                <button class="opt active" data-layout-opt="classic"><span class="pv" data-pv="classic"><svg viewBox="0 0 112 66"><rect width="112" height="66" fill="#F7F8FA"></rect><rect x="33" y="8" width="46" height="7" rx="1.5" fill="#FFFFFF" stroke="#E7EAEE"></rect><rect x="5" y="24" width="20" height="9" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="30" y="24" width="20" height="9" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="55" y="24" width="20" height="9" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="80" y="24" width="20" height="9" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="5" y="37" width="20" height="9" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="30" y="37" width="20" height="9" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="55" y="37" width="20" height="9" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="80" y="37" width="20" height="9" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="5" y="50" width="20" height="9" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="30" y="50" width="20" height="9" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="55" y="50" width="20" height="9" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="80" y="50" width="20" height="9" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect></svg></span><span>经典</span></button>
-                <button class="opt" data-layout-opt="compact"><span class="pv" data-pv="compact"><svg viewBox="0 0 112 66"><rect width="112" height="66" fill="#F7F8FA"></rect><rect x="33" y="8" width="46" height="7" rx="1.5" fill="#FFFFFF" stroke="#E7EAEE"></rect><rect x="5" y="24" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="25" y="24" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="45" y="24" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="65" y="24" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="85" y="24" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="5" y="35" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="25" y="35" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="45" y="35" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="65" y="35" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="85" y="35" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="5" y="46" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="25" y="46" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="45" y="46" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="65" y="46" width="16" height="7" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="85" y="46" width="16" height="7" rx="2" fill="#FFFFFF" strok
-e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
-                <button class="opt" data-layout-opt="simple"><span class="pv" data-pv="simple"><svg viewBox="0 0 112 66"><rect width="112" height="66" fill="#F7F8FA"></rect><rect x="33" y="8" width="46" height="7" rx="1.5" fill="#FFFFFF" stroke="#E7EAEE"></rect><rect x="6" y="24" width="12" height="12" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="24" y="24" width="12" height="12" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="42" y="24" width="12" height="12" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="60" y="24" width="12" height="12" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="6" y="41" width="12" height="12" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="24" y="41" width="12" height="12" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="42" y="41" width="12" height="12" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="60" y="41" width="12" height="12" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="6" y="58" width="12" height="12" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="24" y="58" width="12" height="12" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="42" y="58" width="12" height="12" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="60" y="58" width="12" height="12" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect></svg></span><span>简洁</span></button>
-                <button class="opt" data-layout-opt="simple-compact"><span class="pv" data-pv="simple-compact"><svg viewBox="0 0 112 66"><rect width="112" height="66" fill="#F7F8FA"></rect><rect x="33" y="8" width="46" height="7" rx="1.5" fill="#FFFFFF" stroke="#E7EAEE"></rect><rect x="5" y="24" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="19" y="24" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="33" y="24" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="47" y="24" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="61" y="24" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="5" y="38" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="19" y="38" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="33" y="38" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="47" y="38" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="61" y="38" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="5" y="52" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="19" y="52" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="33" y="52" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="47" y="52" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect><rect x="61" y="52" width="10" height="10" rx="2" fill="#FFFFFF" stroke="#E5E9ED"></rect></svg></span><span>简洁（紧凑）</span></button>
+                <button class="opt active" data-layout-opt="classic"><span class="pv" data-pv="classic"></span><span>经典</span></button>
+                <button class="opt" data-layout-opt="compact"><span class="pv" data-pv="compact"></span><span>经典（紧凑）</span></button>
+                <button class="opt" data-layout-opt="simple"><span class="pv" data-pv="simple"></span><span>简洁</span></button>
+                <button class="opt" data-layout-opt="simple-compact"><span class="pv" data-pv="simple-compact"></span><span>简洁（紧凑）</span></button>
               </div>
             </div>
             <div class="card">
@@ -1461,7 +1270,7 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
                 <input type="text" id="cityInput" placeholder="输入城市名，例如 上海" maxlength="24">
                 <button type="button" class="btn" id="cityAdd">添加</button>
               </div>
-              <div class="city-list" id="cityList"><span class="city-chip">北京<button type="button" data-ci="0" title="移除">×</button></span></div>
+              <div class="city-list" id="cityList"></div>
               <p class="hint">最多添加 4 个城市，待机页会并排显示各自的天气。</p>
             </div>
           </div>
@@ -1513,16 +1322,12 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
       <input type="text" id="fUrl" placeholder="https://www.zhihu.com">
     </div>
     <div class="field">
-      <label>分类</label>
-      <select id="fCat" class="sel" style="width:100%"></select>
-    </div>
-    <div class="field">
       <label>图标文字</label>
       <div class="two-col">
         <div><input type="text" id="fGlyph" maxlength="2" placeholder="1~2 个字"></div>
         <input type="color" id="fColor" class="inline-color" value="#1890FF" title="自定义颜色">
       </div>
-      <div class="color-list" id="colorList"><button type="button" class="color-dot" data-color="#2932E1" title="#2932E1" style="background: rgb(41, 50, 225);"></button><button type="button" class="color-dot" data-color="#FF5000" title="#FF5000" style="background: rgb(255, 80, 0);"></button><button type="button" class="color-dot" data-color="#E1251B" title="#E1251B" style="background: rgb(225, 37, 27);"></button><button type="button" class="color-dot" data-color="#0084FF" title="#0084FF" style="background: rgb(0, 132, 255);"></button><button type="button" class="color-dot" data-color="#FB7299" title="#FB7299" style="background: rgb(251, 114, 153);"></button><button type="button" class="color-dot" data-color="#07C160" title="#07C160" style="background: rgb(7, 193, 96);"></button><button type="button" class="color-dot" data-color="#E6162D" title="#E6162D" style="background: rgb(230, 22, 45);"></button><button type="button" class="color-dot" data-color="#FF2442" title="#FF2442" style="background: rgb(255, 36, 66);"></button><button type="button" class="color-dot" data-color="#2E963D" title="#2E963D" style="background: rgb(46, 150, 61);"></button><button type="button" class="color-dot" data-color="#3370FF" title="#3370FF" style="background: rgb(51, 112, 255);"></button><button type="button" class="color-dot" data-color="#2BA471" title="#2BA471" style="background: rgb(43, 164, 113);"></button><button type="button" class="color-dot" data-color="#1FA463" title="#1FA463" style="background: rgb(31, 164, 99);"></button><button type="button" class="color-dot" data-color="#A259FF" title="#A259FF" style="background: rgb(162, 89, 255);"></button><button type="button" class="color-dot" data-color="#00C4CC" title="#00C4CC" style="background: rgb(0, 196, 204);"></button><button type="button" class="color-dot" data-color="#10A37F" title="#10A37F" style="background: rgb(16, 163, 127);"></button><button type="button" class="color-dot" data-color="#F48024" title="#F48024" style="background: rgb(244, 128, 36);"></button><button type="button" class="color-dot" data-color="#1E80FF" title="#1E80FF" style="background: rgb(30, 128, 255);"></button><button type="button" class="color-dot" data-color="#C20C0C" title="#C20C0C" style="background: rgb(194, 12, 12);"></button><button type="button" class="color-dot" data-color="#31C27C" title="#31C27C" style="background: rgb(49, 194, 124);"></button><button type="button" class="color-dot" data-color="#00A9FF" title="#00A9FF" style="background: rgb(0, 169, 255);"></button><button type="button" class="color-dot" data-color="#FF0000" title="#FF0000" style="background: rgb(255, 0, 0);"></button><button type="button" class="color-dot" data-color="#171515" title="#171515" style="background: rgb(23, 21, 21);"></button><button type="button" class="color-dot" data-color="#000000" title="#000000" style="background: rgb(0, 0, 0);"></button><button type="button" class="color-dot" data-color="#8B5CF6" title="#8B5CF6" style="background: rgb(139, 92, 246);"></button></div>
+      <div class="color-list" id="colorList"></div>
     </div>
     <div class="dialog-foot">
       <button class="btn danger" id="btnDelete" style="display:none">删除</button>
@@ -1558,60 +1363,49 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
   const EDIT_COLORS = ['#2932E1','#FF5000','#E1251B','#0084FF','#FB7299','#07C160','#E6162D','#FF2442','#2E963D','#3370FF','#2BA471','#1FA463','#A259FF','#00C4CC','#10A37F','#F48024','#1E80FF','#C20C0C','#31C27C','#00A9FF','#FF0000','#171515','#000000','#8B5CF6'];
 
   const DEFAULT_SITES = [
-    { name:'订单管理',    url:'http://crm.zhanchen.cn:8885/#/mixed-page/view/MXP00005', glyph:'订单', color:'#2979FF', g:0, cat:'w' },
-    { name:'微信网页版',  url:'https://wx.qq.com/?lang=zh_CN',                          glyph:'微信', color:'#07C160', g:0, cat:'c' },
-    { name:'爱淘宝',      url:'https://ai.taobao.com/?pid=mm_1042050059_1426300057_110172600194&union_lens=lensId%3APUB%401585387134%400b0af5b7_0e21_171206fdf73_047b%4001', glyph:'淘宝', color:'#FF5000', g:0, cat:'l' },
-    { name:'知乎',        url:'https://www.zhihu.com/',                                 glyph:'知乎', color:'#0084FF', g:0, cat:'c' },
-    { name:'携程',        url:'https://www.ctrip.com/',                                 glyph:'携程', color:'#287DFA', g:0, cat:'l' },
-    { name:'今日头条',    url:'https://www.toutiao.com/',                               glyph:'今日', color:'#F04142', g:0, cat:'c' },
-    { name:'百度地图',    url:'https://map.baidu.com/',                                 glyph:'地图', color:'#2A6BE0', g:0, cat:'c' },
-    { name:'扩展',        url:'edge://extensions/?id=copeiejfefagfmjndfgbllokphlmalon',  glyph:'扩展', color:'#2F6FEB', g:0, cat:'s' },
-    { name:'吾爱破解',    url:'https://www.52pojie.cn/',                                glyph:'吾爱', color:'#0B5FFF', g:0, cat:'d' },
-    { name:'易破解',      url:'http://www.ypojie.com/',                                 glyph:'易破', color:'#5B8DEF', g:0, cat:'d' },
-    { name:'聚问天空',    url:'https://www.ansky.com/',                                 glyph:'12', color:'#2F80ED', g:0, cat:'d' },
-    { name:'绿软小站',    url:'https://www.gndown.com/',                                glyph:'绿软', color:'#1FA463', g:0, cat:'d' },
-    { name:'系统迷',      url:'https://www.xitmi.com/',                                 glyph:'系统', color:'#2F6FEB', g:0, cat:'d' },
-    { name:'mefcl',       url:'https://www.mefcl.com/',                                 glyph:'me', color:'#4A90E2', g:0, cat:'d' },
-    { name:'大眼仔旭',    url:'http://www.dayanzai.me/',                                glyph:'大眼', color:'#2AA9E0', g:0, cat:'d' },
-    { name:'知轩藏书',    url:'http://www.zxcs.me/',                                    glyph:'知轩', color:'#4C6EF5', g:0, cat:'d' },
-    { name:'注册安全工程师', url:'http://rmocse.chinasafety.ac.cn/Main.aspx',            glyph:'注册', color:'#2D7FF9', g:0, cat:'w' },
-    { name:'Microsoft',   url:'https://copilot.microsoft.com/',                         glyph:'MS',  color:'#0067B8', g:0, cat:'a' },
-    { name:'上海危爆',    url:'http://180.168.211.50:9080/sbwp_sh/identify.do?method=login', glyph:'上海', color:'#D93A3A', g:0, cat:'w' },
-    { name:'ExcelHome',   url:'https://club.excelhome.net/forum.php',                   glyph:'EH', color:'#217346', g:0, cat:'w' },
-    { name:'网盘直链',    url:'https://www.youxiaohou.com/install.html#%F0%9F%9A%80-%E9%80%9F%E5%BA%A6%E6%B5%8B%E8%AF%95', glyph:'网盘', color:'#8B5CF6', g:0, cat:'d' },
-    { name:'珠海展辰',    url:'https://www.umu.cn/index#/index',                        glyph:'珠海', color:'#0EA5A4', g:0, cat:'w' },
-    { name:'聚合网盘',    url:'https://juhepan.cn/',                                    glyph:'聚合', color:'#6A5ACD', g:0, cat:'d' },
-    { name:'添加配置',    url:'http://blts.x3322.net/index/userstore/add.html',          glyph:'添加', color:'#8B5CF6', g:0, cat:'w' },
-    { name:'东东AI商店',  url:'https://dongai.shop/chat',                               glyph:'东东', color:'#E5484D', g:0, cat:'a' },
-    { name:'OKZTWO',      url:'http://47.116.73.91:65533/index.php/#/plan',              glyph:'OK', color:'#E5A11C', g:0, cat:'w' },
-    { name:'Excel函数',   url:'https://www.lanrenexcel.com/excel-functions-list/',       glyph:'EX', color:'#21A366', g:0, cat:'w' },
-    { name:'AnFuns',      url:'https://www.anfuns.cc/',                                 glyph:'An', color:'#E5484D', g:0, cat:'c' },
-    { name:'文库下载',    url:'http://111.180.204.129:8848/web',                         glyph:'文库', color:'#E5484D', g:0, cat:'c' },
-    { name:'微信图片',    url:'http://118.178.194.25/filerecv/index.html?from=soft',      glyph:'微信', color:'#07C160', g:0, cat:'c' },
-    { name:'发货计划',    url:'https://docs.qq.com/sheet/DU2RwWmZRUFFHZm5Z?tab=7jwf92',  glyph:'发货', color:'#22B573', g:0, cat:'w' },
-    { name:'MSDN',        url:'https://msdn.sjjzm.com/win11.html',                       glyph:'Wi', color:'#7C5CFC', g:0, cat:'s' },
-    { name:'my-tv',       url:'https://github.com/lizongying/my-tv',                     glyph:'GH', color:'#171515', g:0, cat:'m' },
-    { name:'统一登录',    url:'http://101.227.181.188:8088/ajpt/login.html',             glyph:'统一', color:'#22B573', g:0, cat:'w' },
-    { name:'我的電視',    url:'https://lyrics.run/my-tv-0.html',                         glyph:'我的', color:'#2F80ED', g:0, cat:'m' },
-    { name:'塔猫',        url:'http://youhou.tamao.fun/',                                glyph:'塔猫', color:'#3B4252', g:0, cat:'d' },
-    { name:'电影天堂',    url:'https://www.dyttcn.com/#',                                glyph:'电影', color:'#2F3640', g:0, cat:'m' },
-    { name:'度云',        url:'https://hy.oxah.cn/user',                                 glyph:'度云', color:'#E5484D', g:0, cat:'d' },
-    { name:'codn',        url:'https://d.itadn.com/',                                    glyph:'co', color:'#F5A623', g:0, cat:'d' },
-    { name:'文件接收',    url:'http://118.178.194.25/filerecv/index.html?from=soft',      glyph:'文件', color:'#E5484D', g:0, cat:'c' },
-    { name:'飞牛',        url:'https://192.168.1.7/',                                    glyph:'飞牛', color:'#E5484D', g:0, cat:'s' }
+    { name:'订单管理',    url:'http://crm.zhanchen.cn:8885/#/mixed-page/view/MXP00005', glyph:'订单', color:'#2979FF', g:0 },
+    { name:'微信网页版',  url:'https://wx.qq.com/?lang=zh_CN',                          glyph:'微信', color:'#07C160', g:0 },
+    { name:'爱淘宝',      url:'https://ai.taobao.com/?pid=mm_1042050059_1426300057_110172600194&union_lens=lensId%3APUB%401585387134%400b0af5b7_0e21_171206fdf73_047b%4001', glyph:'淘', color:'#FF5000', g:0 },
+    { name:'知乎',        url:'https://www.zhihu.com/',                                 glyph:'知', color:'#0084FF', g:0 },
+    { name:'携程',        url:'https://www.ctrip.com/',                                 glyph:'携', color:'#287DFA', g:0 },
+    { name:'今日头条',    url:'https://www.toutiao.com/',                               glyph:'今日', color:'#F04142', g:0 },
+    { name:'百度地图',    url:'https://map.baidu.com/',                                 glyph:'地图', color:'#2A6BE0', g:0 },
+    { name:'扩展',        url:'edge://extensions/?id=copeiejfefagfmjndfgbllokphlmalon',  glyph:'扩', color:'#2F6FEB', g:0 },
+    { name:'吾爱破解',    url:'https://www.52pojie.cn/',                                glyph:'吾爱', color:'#0B5FFF', g:0 },
+    { name:'易破解',      url:'http://www.ypojie.com/',                                 glyph:'易', color:'#5B8DEF', g:0 },
+    { name:'聚问天空',    url:'https://www.ansky.com/',                                 glyph:'12', color:'#2F80ED', g:0 },
+    { name:'绿软小站',    url:'https://www.gndown.com/',                                glyph:'绿软', color:'#1FA463', g:0 },
+    { name:'系统迷',      url:'https://www.xitmi.com/',                                 glyph:'系统', color:'#2F6FEB', g:0 },
+    { name:'mefcl',       url:'https://www.mefcl.com/',                                 glyph:'me', color:'#4A90E2', g:0 },
+    { name:'大眼仔旭',    url:'http://www.dayanzai.me/',                                glyph:'大眼', color:'#2AA9E0', g:0 },
+    { name:'知轩藏书',    url:'http://www.zxcs.me/',                                    glyph:'知轩', color:'#4C6EF5', g:0 },
+    { name:'注册安全工程师', url:'http://rmocse.chinasafety.ac.cn/Main.aspx',            glyph:'注册', color:'#2D7FF9', g:0 },
+    { name:'Microsoft',   url:'https://copilot.microsoft.com/',                         glyph:'M',  color:'#0067B8', g:0 },
+    { name:'上海危爆',    url:'http://180.168.211.50:9080/sbwp_sh/identify.do?method=login', glyph:'上海', color:'#D93A3A', g:0 },
+    { name:'ExcelHome',   url:'https://club.excelhome.net/forum.php',                   glyph:'EH', color:'#217346', g:0 },
+    { name:'网盘直链',    url:'https://www.youxiaohou.com/install.html#%F0%9F%9A%80-%E9%80%9F%E5%BA%A6%E6%B5%8B%E8%AF%95', glyph:'网盘', color:'#8B5CF6', g:0 },
+    { name:'珠海展辰',    url:'https://www.umu.cn/index#/index',                        glyph:'珠海', color:'#0EA5A4', g:0 },
+    { name:'聚合网盘',    url:'https://juhepan.cn/',                                    glyph:'聚合', color:'#6A5ACD', g:0 },
+    { name:'添加配置',    url:'http://blts.x3322.net/index/userstore/add.html',          glyph:'添加', color:'#8B5CF6', g:0 },
+    { name:'东东AI商店',  url:'https://dongai.shop/chat',                               glyph:'东东', color:'#E5484D', g:0 },
+    { name:'OKZTWO',      url:'http://47.116.73.91:65533/index.php/#/plan',              glyph:'OK', color:'#E5A11C', g:0 },
+    { name:'Excel函数',   url:'https://www.lanrenexcel.com/excel-functions-list/',       glyph:'EX', color:'#21A366', g:0 },
+    { name:'AnFuns',      url:'https://www.anfuns.cc/',                                 glyph:'An', color:'#E5484D', g:0 },
+    { name:'文库下载',    url:'http://111.180.204.129:8848/web',                         glyph:'文库', color:'#E5484D', g:0 },
+    { name:'微信图片',    url:'http://118.178.194.25/filerecv/index.html?from=soft',      glyph:'微信', color:'#07C160', g:0 },
+    { name:'发货计划',    url:'https://docs.qq.com/sheet/DU2RwWmZRUFFHZm5Z?tab=7jwf92',  glyph:'发货', color:'#22B573', g:0 },
+    { name:'MSDN',        url:'https://msdn.sjjzm.com/win11.html',                       glyph:'Wi', color:'#7C5CFC', g:0 },
+    { name:'my-tv',       url:'https://github.com/lizongying/my-tv',                     glyph:'GH', color:'#171515', g:0 },
+    { name:'统一登录',    url:'http://101.227.181.188:8088/ajpt/login.html',             glyph:'统一', color:'#22B573', g:0 },
+    { name:'我的電視',    url:'https://lyrics.run/my-tv-0.html',                         glyph:'我的', color:'#2F80ED', g:0 },
+    { name:'塔猫',        url:'http://youhou.tamao.fun/',                                glyph:'塔猫', color:'#3B4252', g:0 },
+    { name:'电影天堂',    url:'https://www.dyttcn.com/#',                                glyph:'电影', color:'#2F3640', g:0 },
+    { name:'系统迷',      url:'https://www.xitmi.com/',                                 glyph:'系统', color:'#2F6FEB', g:0 },
+    { name:'度云',        url:'https://hy.oxah.cn/user',                                 glyph:'度云', color:'#E5484D', g:0 },
+    { name:'codn',        url:'https://d.itadn.com/',                                    glyph:'co', color:'#F5A623', g:0 },
+    { name:'文件接收',    url:'http://118.178.194.25/filerecv/index.html?from=soft',      glyph:'文件', color:'#E5484D', g:0 },
+    { name:'飞牛',        url:'https://192.168.1.7/',                                    glyph:'飞牛', color:'#E5484D', g:0 }
   ];
-
-  /* ---------- 图标分类 ---------- */
-  const CATS = [
-    { id:'c', name:'常用' },
-    { id:'w', name:'工作办公' },
-    { id:'d', name:'下载工具' },
-    { id:'a', name:'AI 工具' },
-    { id:'m', name:'影视娱乐' },
-    { id:'s', name:'系统技术' },
-    { id:'l', name:'生活服务' }
-  ];
-  const CAT_IDS = CATS.map(c => c.id);
 
   function defaultState(){
     return {
@@ -1627,10 +1421,6 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
       showAdd: true,
       newTab: false,
       engine: 'bing',
-      catSel: 'all',
-      showWeather: true,
-      wunit: 'c',
-      wpCity: 0,
       history: true,
       editMode: false,
       standby: true,
@@ -1644,7 +1434,7 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
       weatherOffset: 0,
       dateBlur: 10,
       dateRadius: 999,
-      cities: [{ name:'北京', lat:39.9042, lon:116.4074 }],
+      cities: [{ name:'珠海', lat:22.2710, lon:113.5767 }],
       h24: true,
       followSystem: false,
       bg: { light:'#F5F7F8', dark:'#003355' },
@@ -1659,26 +1449,6 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     const s = Object.assign({}, def, saved);
     s.bg = Object.assign({}, def.bg, saved.bg || {});
     if (!Array.isArray(s.sites)) s.sites = def.sites;
-    /* 迁移：为旧数据补充分类，并去除名称+网址完全相同的重复项 */
-    (function(){
-      const catOf = new Map();
-      def.sites.forEach(d => { if (!catOf.has(d.url)) catOf.set(d.url, d.cat); });
-      const GLYPH_UP = { '爱淘宝':'淘宝', '知乎':'知乎', '携程':'携程', '扩展':'扩展', '易破解':'易破', 'Microsoft':'MS' };
-      const seen = new Set();
-      const out = [];
-      s.sites.forEach(x => {
-        const key = (x.name || '') + '|' + x.url;
-        if (seen.has(key)) return;
-        seen.add(key);
-        if (!x.cat) x.cat = catOf.get(x.url) || 'c';
-        if (x.glyph && x.glyph.length === 1 && GLYPH_UP[x.name]) x.glyph = GLYPH_UP[x.name];
-        out.push(x);
-      });
-      s.sites = out;
-    })();
-    if (s.catSel !== 'all' && !CAT_IDS.includes(s.catSel)) s.catSel = 'all';
-    if (s.wunit !== 'f') s.wunit = 'c';
-    if (!Number.isInteger(s.wpCity) || s.wpCity < 0) s.wpCity = 0;
     if (!Array.isArray(s.cities) || !s.cities.length) s.cities = def.cities;
     s.editMode = false;
     return s;
@@ -1765,7 +1535,6 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     b.classList.toggle('edit-mode', !!state.editMode);
     $('#btnEdit').classList.toggle('on', !!state.editMode);
     $('#searchWrap').style.display = state.showSearch ? '' : 'none';
-    document.body.classList.toggle('no-weather', !state.showWeather);
   }
   function applyState(){
     applyTheme();
@@ -1786,7 +1555,7 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     a.href = s.url;
     a.target = state.newTab ? '_blank' : '_self';
     a.rel = 'noopener';
-    const glyph = s.glyph || s.name.slice(0, 2);
+    const glyph = s.glyph || s.name.slice(0, 1);
     a.innerHTML = '<span class="tile-icon' + (glyph.length > 1 ? ' two' : '') + '" style="--c:' + esc(s.color || '#1890FF') + '">' + esc(glyph) + '</span>'
                 + '<span class="tile-name">' + esc(s.name) + '</span>';
     a.addEventListener('click', e => {
@@ -1815,30 +1584,7 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     return btn;
   }
 
-  /* ---------- 分类标签 ---------- */
-  function catCount(id){ return state.sites.filter(s => (s.cat || 'c') === id).length; }
-  function renderCatBar(){
-    const bar = $('#catBar');
-    if (!bar) return;
-    const items = [{ id:'all', name:'全部', n: state.sites.length }]
-      .concat(CATS.map(c => ({ id:c.id, name:c.name, n: catCount(c.id) })));
-    bar.innerHTML = items.map(it =>
-      '<button type="button" role="tab" class="cat-tab' + (state.catSel === it.id ? ' active' : '')
-      + '" data-cat="' + it.id + '" aria-selected="' + (state.catSel === it.id) + '">'
-      + esc(it.name) + '<span class="n">' + it.n + '</span></button>'
-    ).join('');
-    $$('#catBar .cat-tab').forEach(b => {
-      b.addEventListener('click', () => {
-        if (state.catSel === b.dataset.cat) return;
-        state.catSel = b.dataset.cat;
-        save();
-        renderSites();
-      });
-    });
-  }
-
   function renderSites(){
-    renderCatBar();
     const grid = $('#grid');
     grid.innerHTML = '';
     if (!state.sites.length){
@@ -1849,24 +1595,13 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
       if (state.showAdd) grid.appendChild(addEl());
       return;
     }
-    const list = state.sites
-      .map((s, i) => ({ s, i }))
-      .filter(e => state.catSel === 'all' || (e.s.cat || 'c') === state.catSel);
-    if (!list.length){
-      const tip = document.createElement('div');
-      tip.className = 'empty-tip';
-      tip.textContent = '该分类下还没有图标，点击「+ 添加」新增。';
-      grid.appendChild(tip);
-      if (state.showAdd) grid.appendChild(addEl());
-      return;
-    }
     const groups = [];
-    list.forEach(e => { if (!groups.includes(e.s.g)) groups.push(e.s.g); });
+    state.sites.forEach(s => { if (!groups.includes(s.g)) groups.push(s.g); });
     groups.sort((a, b) => a - b);
     groups.forEach(g => {
       const wrap = document.createElement('div');
       wrap.className = 'grid-group';
-      list.forEach(e => { if (e.s.g === g) wrap.appendChild(tileEl(e.s, e.i)); });
+      state.sites.forEach((s, i) => { if (s.g === g) wrap.appendChild(tileEl(s, i)); });
       grid.appendChild(wrap);
     });
     if (state.showAdd){
@@ -1998,8 +1733,6 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     const en = ENGINES[state.engine] || ENGINES.bing;
     $('#engineBtn').innerHTML = engineMark(en);
     $('#engineBtn').title = '当前搜索引擎：' + en.name;
-    const si = $('#searchInput');
-    if (si) si.placeholder = en.name + ' 搜索';
   }
   function renderEngineMenu(){
     const box = $('#engineMenu');
@@ -2154,8 +1887,7 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
   $$('[data-select]').forEach(sel => {
     sel.addEventListener('change', () => {
       const k = sel.dataset.select;
-      if (k === 'newTab')
- state.newTab = sel.value === '1';
+      if (k === 'newTab') state.newTab = sel.value === '1';
       else if (k === 'idleSec') state.idleSec = Number(sel.value);
       else state[k] = sel.value;
       save();
@@ -2254,9 +1986,6 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     $('#fUrl').value = s ? s.url : '';
     $('#fGlyph').value = s ? (s.glyph || '') : '';
     $('#fColor').value = (s && /^#[0-9a-f]{6}$/i.test(s.color || '')) ? s.color : '#1890FF';
-    const fCat = $('#fCat');
-    fCat.innerHTML = CATS.map(c => '<option value="' + c.id + '">' + esc(c.name) + '</option>').join('');
-    fCat.value = s ? (s.cat || 'c') : (state.catSel !== 'all' ? state.catSel : 'c');
     $('#btnDelete').style.display = s ? '' : 'none';
     buildColors();
     $('#editorOverlay').classList.add('open');
@@ -2295,14 +2024,14 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     if (!name){ toast('请填写图标名称'); $('#fName').focus(); return; }
     if (!url){ toast('请填写网址'); $('#fUrl').focus(); return; }
     if (!/^https?:\/\//i.test(url)) url = 'https://' + url.replace(/^\/+/, '');
-    const glyph = ($('#fGlyph').value.trim() || name.slice(0, 2)).slice(0, 2);
+    const glyph = ($('#fGlyph').value.trim() || name.slice(0, 1)).slice(0, 2);
     const color = $('#fColor').value || '#1890FF';
     const isNew = editingIndex === null;
     if (isNew){
       const g = state.sites.length ? state.sites[state.sites.length - 1].g : 0;
-      state.sites.push({ name, url, glyph, color, g, cat: $('#fCat').value || 'c' });
+      state.sites.push({ name, url, glyph, color, g });
     } else {
-      Object.assign(state.sites[editingIndex], { name, url, glyph, color, cat: $('#fCat').value || 'c' });
+      Object.assign(state.sites[editingIndex], { name, url, glyph, color });
     }
     save();
     renderSites();
@@ -2342,86 +2071,31 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     85:'阵雪', 86:'强阵雪', 95:'雷雨', 96:'雷雨', 99:'雷雨'
   };
   function condName(code){ return COND[code] || '多云'; }
-  function weatherIcon(code, isDay){
+  function weatherIcon(code){
     const defs = '<defs>'
-      + '<linearGradient id="wgSun" x1="0" y1="0" x2="0" y2="1">'
-      + '<stop offset="0" stop-color="#FFE47A"/><stop offset="1" stop-color="#FF9F0A"/></linearGradient>'
-      + '<linearGradient id="wgCloud" x1="0" y1="0" x2="0" y2="1">'
-      + '<stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#B9CfEC"/></linearGradient>'
-      + '<linearGradient id="wgDark" x1="0" y1="0" x2="0" y2="1">'
-      + '<stop offset="0" stop-color="#BCCDE7"/><stop offset="1" stop-color="#7189AC"/></linearGradient>'
-      + '<linearGradient id="wgMoon" x1="0" y1="0" x2="0" y2="1">'
-      + '<stop offset="0" stop-color="#FFF6D8"/><stop offset="1" stop-color="#FFD24D"/></linearGradient>'
+      + '<linearGradient id="wfSun" x1="0" y1="0" x2="0" y2="1">'
+      + '<stop offset="0" stop-color="#fff3b0"/><stop offset="1" stop-color="#ffb300"/></linearGradient>'
+      + '<linearGradient id="wfCloud" x1="0" y1="0" x2="0" y2="1">'
+      + '<stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#8fb0e6"/></linearGradient>'
       + '</defs>';
-    const CLOUD = 'M15.5 33h19a6.2 6.2 0 0 0 .7-12.4A9.2 9.2 0 0 0 17 17.5 6.5 6.5 0 0 0 15.5 33Z';
-    const cloud = (t, fill, op) => '<g transform="' + t + '"><path d="' + CLOUD + '" fill="' + fill + '"' + (op ? ' opacity="' + op + '"' : '') + '/></g>';
-    const svg = inner => '<svg viewBox="0 0 48 48">' + defs + inner + '</svg>';
-    code = Number(code) || 0;
-    if (code === 0){
-      if (isDay === false){
-        return svg('<circle cx="24" cy="24" r="15" fill="rgba(255,222,120,.16)"/>'
-          + '<path d="M29.5 7A12.6 12.6 0 1 0 41.4 22.6 10.5 10.5 0 0 1 29.5 7Z" fill="url(#wgMoon)"/>'
-          + '<circle cx="12.5" cy="14" r="1.4" fill="#FFE47A"/><circle cx="37.5" cy="35.5" r="1.1" fill="#FFE47A"/><circle cx="10.5" cy="30" r=".9" fill="#FFE47A"/>');
-      }
-      return svg('<circle cx="24" cy="24" r="15.5" fill="rgba(255,183,3,.2)"/>'
-        + '<g stroke="#FFB800" stroke-width="2.6" stroke-linecap="round">'
-        + '<path d="M24 4v5.2M24 38.8V44M4 24h5.2M38.8 24H44M9.7 9.7l3.7 3.7M34.6 34.6l3.7 3.7M38.3 9.7l-3.7 3.7M13.4 34.6l-3.7 3.7"/></g>'
-        + '<circle cx="24" cy="24" r="10.2" fill="url(#wgSun)"/>'
-        + '<circle cx="20.4" cy="20.4" r="3" fill="rgba(255,255,255,.5)"/>');
+    const cloud = '<path d="M15.5 33h19a6.2 6.2 0 0 0 .7-12.4A9.2 9.2 0 0 0 17 17.5 6.5 6.5 0 0 0 15.5 33Z" fill="url(#wfCloud)"/>';
+    if (code === 0 || code === 1){
+      return '<svg viewBox="0 0 48 48">' + defs
+        + '<circle cx="24" cy="24" r="17" fill="rgba(255,196,0,.16)"/>'
+        + '<circle cx="24" cy="24" r="9" fill="url(#wfSun)"/>'
+        + '<g stroke="rgba(255,196,0,.85)" stroke-width="2.4" stroke-linecap="round">'
+        + '<path d="M24 4v5M24 39v5M4 24h5M39 24h5M10.5 10.5l3.5 3.5M34 34l3.5 3.5M37.5 10.5 34 14M14 34l-3.5 3.5"/></g>'
+        + '</svg>';
     }
-    if (code === 1){
-      return svg('<circle cx="29" cy="17.5" r="12" fill="rgba(255,183,3,.16)"/>'
-        + '<g stroke="#FFB800" stroke-width="2" stroke-linecap="round">'
-        + '<path d="M29 5v3.2M41 17.5h-3.2M37.6 8.9l-2.3 2.3M20.4 8.9l2.3 2.3"/></g>'
-        + '<circle cx="29" cy="17.5" r="7.6" fill="url(#wgSun)"/>'
-        + cloud('translate(-1 12) scale(.9)', 'url(#wgCloud)'));
+    if ([51,53,55,61,63,65,80,81,82,95,96,99].indexOf(code) > -1){
+      return '<svg viewBox="0 0 48 48">' + defs + cloud
+        + '<g stroke="#8fc0ff" stroke-width="2.8" stroke-linecap="round"><path d="M16 38v4M24 38v4M32 38v4"/></g></svg>';
     }
-    if (code === 2){
-      return svg('<circle cx="29.5" cy="18" r="13" fill="rgba(255,183,3,.14)"/>'
-        + '<circle cx="29.5" cy="18" r="8.4" fill="url(#wgSun)"/>'
-        + cloud('translate(-2 9)', 'url(#wgCloud)'));
+    if ([71,73,75,77,85,86].indexOf(code) > -1){
+      return '<svg viewBox="0 0 48 48">' + defs + cloud
+        + '<g fill="#8fc0ff"><circle cx="17" cy="40" r="2.6"/><circle cx="24" cy="40" r="2.6"/><circle cx="31" cy="40" r="2.6"/></g></svg>';
     }
-    if (code === 3){
-      return svg(cloud('translate(9 -3) scale(.72)', 'url(#wgDark)', '.95')
-        + cloud('translate(-2 8) scale(.92)', 'url(#wgCloud)'));
-    }
-    if (code === 45 || code === 48){
-      return svg(cloud('translate(1 -3) scale(.9)', 'url(#wgCloud)')
-        + '<g stroke="#AFC2DC" stroke-width="2.6" stroke-linecap="round"><path d="M10 37.5h28M13.5 42.5h21"/></g>');
-    }
-    if (code === 51 || code === 53 || code === 55){
-      return svg(cloud('translate(0 -1)', 'url(#wgCloud)')
-        + '<g stroke="#4FB2FF" stroke-width="2.4" stroke-linecap="round"><path d="M17 37v3M24 37v3M31 37v3"/></g>');
-    }
-    if (code === 61 || code === 63 || code === 65){
-      const heavy = code !== 61;
-      return svg(cloud('translate(0 -2)', 'url(#wgDark)')
-        + '<g stroke="#2F9BFF" stroke-width="2.8" stroke-linecap="round" fill="none">'
-        + '<path d="M15.5 35.5l-1.8 5.5"/><path d="M23.5 35.5l-1.8 5.5"/><path d="M31.5 35.5l-1.8 5.5"/>'
-        + (heavy ? '<path d="M19.5 43l-1 3"/><path d="M27.5 43l-1 3"/>' : '') + '</g>');
-    }
-    if (code === 71 || code === 73 || code === 75 || code === 77){
-      return svg(cloud('translate(0 -2)', 'url(#wgCloud)')
-        + '<g fill="#BFE0FF"><circle cx="16.5" cy="39.5" r="2.3"/><circle cx="24" cy="42" r="2.3"/><circle cx="31.5" cy="39.5" r="2.3"/>'
-        + (code === 75 ? '<circle cx="20" cy="45" r="1.8"/><circle cx="28" cy="45" r="1.8"/>' : '') + '</g>');
-    }
-    if (code === 80 || code === 81 || code === 82){
-      return svg('<circle cx="33" cy="13.5" r="7" fill="url(#wgSun)"/>'
-        + '<g stroke="#FFB800" stroke-width="1.8" stroke-linecap="round"><path d="M33 3.5v2.6M42 13.5h-2.6M39.6 6.9l-1.9 1.9"/></g>'
-        + cloud('translate(-2 8) scale(.94)', 'url(#wgDark)')
-        + '<g stroke="#2F9BFF" stroke-width="2.6" stroke-linecap="round" fill="none">'
-        + '<path d="M16 37l-1.8 5"/><path d="M24 37l-1.8 5"/><path d="M32 37l-1.8 5"/></g>');
-    }
-    if (code === 85 || code === 86){
-      return svg(cloud('translate(0 -2)', 'url(#wgDark)')
-        + '<g fill="#BFE0FF"><circle cx="17" cy="39.5" r="2.3"/><circle cx="24" cy="42" r="2.3"/><circle cx="31" cy="39.5" r="2.3"/></g>');
-    }
-    if (code === 95 || code === 96 || code === 99){
-      return svg(cloud('translate(1 -3) scale(.98)', 'url(#wgDark)')
-        + '<path d="M24.5 30.5l-5.4 9h4l-2.6 8 9.2-10.8h-4.4l3.6-6.2Z" fill="#FFD530" stroke="#FF9F0A" stroke-width=".8" stroke-linejoin="round"/>'
-        + '<g stroke="#2F9BFF" stroke-width="2.4" stroke-linecap="round" fill="none"><path d="M33.5 37.5l-1.4 4"/></g>');
-    }
-    return svg(cloud('translate(0 0)', 'url(#wgCloud)'));
+    return '<svg viewBox="0 0 48 48">' + defs + cloud + '</svg>';
   }
   function cityBlock(name, w){
     if (!w){
@@ -2480,7 +2154,6 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     $$('#cityList button').forEach(b => {
       b.addEventListener('click', () => removeCity(Number(b.dataset.ci)));
     });
-    if (typeof renderWpCity === 'function') renderWpCity();
   }
   function addCity(){
     const q = ($('#cityInput').value || '').trim();
@@ -2615,256 +2288,15 @@ e="#E5E9ED"></rect></svg></span><span>经典（紧凑）</span></button>
     }, { passive: true });
   });
 
-  /* ---------- 天气面板（MSN 风格） ---------- */
-  const WP_KEY = 'monstyle.wpanel.v1';
-  let wpData = null;
-  let aqiToken = 0;
-
-  function wpUnitConv(c){
-    if (c === null || c === undefined || isNaN(c)) return '--';
-    return Math.round(state.wunit === 'f' ? c * 9 / 5 + 32 : c);
-  }
-  function wpUnitLabel(){ return state.wunit === 'f' ? '°F' : '°C'; }
-  function windDirName(deg){
-    if (deg === null || deg === undefined || isNaN(deg)) return '--';
-    return ['北风','东北风','东风','东南风','南风','西南风','西风','西北风'][Math.round(deg / 45) % 8];
-  }
-  function beaufort(kmh){
-    if (kmh == null || isNaN(kmh)) return '--';
-    const t = [1,5,11,19,28,38,49,61,74,88,102,117];
-    let lv = 0;
-    for (let i = 0; i < t.length; i++){ if (kmh >= t[i]) lv = i + 1; }
-    return lv;
-  }
-  function uvLevel(u){ return u == null ? '--' : u < 3 ? '低' : u < 6 ? '中' : u < 8 ? '高' : u < 11 ? '很高' : '极高'; }
-  function uvColor(u){ return u == null ? '#9AA3AC' : u < 3 ? '#2BB3A3' : u < 6 ? '#E5A11C' : u < 8 ? '#F0762B' : u < 11 ? '#E5484D' : '#B347E5'; }
-  function visLevel(km){ return km == null ? '--' : km >= 20 ? '优' : km >= 10 ? '良' : km >= 4 ? '一般' : '较差'; }
-  function dewPoint(t, rh){
-    if (t == null || rh == null || rh <= 0) return null;
-    const a = 17.27, b = 237.7;
-    const al = Math.log(rh / 100) + a * t / (b + t);
-    return b * al / (a - al);
-  }
-  function aqiInfo(v){
-    if (v == null) return { t: '--', c: '#9AA3AC' };
-    if (v <= 50) return { t: '优', c: '#2BB3A3' };
-    if (v <= 100) return { t: '良', c: '#7BB02C' };
-    if (v <= 150) return { t: '轻度污染', c: '#E5A11C' };
-    if (v <= 200) return { t: '中度污染', c: '#F0762B' };
-    if (v <= 300) return { t: '重度污染', c: '#E5484D' };
-    return { t: '严重污染', c: '#B347E5' };
-  }
-  function wpCity(){
-    return state.cities[Math.min(state.wpCity || 0, state.cities.length - 1)] || state.cities[0] || { name:'--', lat:39.9042, lon:116.4074 };
-  }
-  function wpSig(){ const c = wpCity(); return c.lat + ',' + c.lon; }
-  function wpNowIndex(d){
-    const off = (d.utc_offset_seconds || 0) * 1000;
-    const stamp = new Date(Date.now() + off).toISOString().slice(0, 13);
-    const idx = d.hourly.time.findIndex(t => t.slice(0, 13) === stamp);
-    return idx < 0 ? 0 : idx;
-  }
-  function wpWeekday(iso){
-    try { return '周' + '日一二三四五六'[new Date(iso + 'T00:00:00').getDay()]; } catch(e){ return '--'; }
-  }
-  function renderWpCity(){
-    const el = $('#wpCity');
-    if (el) el.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>' + esc(wpCity().name);
-    const chips = $('#wpChips');
-    if (chips){
-      chips.innerHTML = state.cities.length > 1
-        ? state.cities.map((x, i) => '<button type="button" class="wp-chip' + (i === (state.wpCity || 0) ? ' on' : '') + '" data-wpc="' + i + '">' + esc(x.name) + '</button>').join('')
-        : '';
-      $$('#wpChips .wp-chip').forEach(b => b.addEventListener('click', () => {
-        state.wpCity = Number(b.dataset.wpc);
-        save();
-        wpData = null;
-        renderWpCity();
-        loadWpanel();
-      }));
-    }
-  }
-  function fetchAqi(c){
-    const tk = ++aqiToken;
-    fetch('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=' + c.lat + '&longitude=' + c.lon + '&current=us_aqi&timezone=auto')
-      .then(r => r.json())
-      .then(d => {
-        if (tk !== aqiToken) return;
-        const el = $('#wpAqi');
-        if (!el) return;
-        const v = d && d.current && d.current.us_aqi;
-        if (v == null){ el.style.display = 'none'; return; }
-        const lv = aqiInfo(Math.round(v));
-        el.style.display = '';
-        el.textContent = 'AQI ' + Math.round(v) + ' ' + lv.t;
-        el.style.background = lv.c + '22';
-        el.style.borderColor = lv.c + '55';
-        el.style.color = lv.c;
-      })
-      .catch(() => {});
-  }
-  function loadWpanel(){
-    if ($('#wpanel') && document.body.classList.contains('no-weather')) return;
-    const c = wpCity();
-    let cache = null;
-    try { cache = JSON.parse(localStorage.getItem(WP_KEY) || 'null'); } catch(e){ cache = null; }
-    if (cache && cache.sig === wpSig() && cache.data && Date.now() - cache.ts < 30 * 60 * 1000){
-      wpData = cache.data;
-      renderWpanel();
-      fetchAqi(c);
-      return;
-    }
-    fetch('https://api.open-meteo.com/v1/forecast?latitude=' + c.lat + '&longitude=' + c.lon
-        + '&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,surface_pressure,wind_speed_10m,wind_direction_10m'
-        + '&hourly=temperature_2m,precipitation_probability,relative_humidity_2m,visibility,uv_index,surface_pressure'
-        + '&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset'
-        + '&timezone=auto&forecast_days=8&wind_speed_unit=kmh')
-      .then(r => r.json())
-      .then(d => {
-        if (!d || !d.current) return;
-        wpData = d;
-        try { localStorage.setItem(WP_KEY, JSON.stringify({ ts: Date.now(), sig: wpSig(), data: d })); } catch(e){}
-        renderWpanel();
-        fetchAqi(c);
-      })
-      .catch(() => {
-        const box = $('#wpNow');
-        if (box) box.innerHTML = '<div class="wp-empty">天气加载失败，请检查网络后刷新</div>';
-      });
-  }
-  function hourlySVG(d){
-    const i0 = wpNowIndex(d);
-    const N = 12;
-    const temps = [], pre = [], times = [];
-    for (let k = 0; k < N; k++){
-      const j = Math.min(i0 + k, d.hourly.time.length - 1);
-      temps.push(d.hourly.temperature_2m[j]);
-      pre.push((d.hourly.precipitation_probability || [])[j] || 0);
-      times.push(d.hourly.time[j].slice(11, 16));
-    }
-    const W = 560, pad = 10, top = 26, bot = 74;
-    const min = Math.min(...temps), max = Math.max(...temps);
-    const span = Math.max(1, max - min);
-    const xs = temps.map((_, k) => pad + k * (W - pad * 2) / (N - 1));
-    const ys = temps.map(v => top + (1 - (v - min) / span) * (bot - top));
-    let line = '';
-    ys.forEach((y, k) => { line += (k ? 'L' : 'M') + xs[k].toFixed(1) + ' ' + y.toFixed(1); });
-    const area = line + 'L' + xs[N-1].toFixed(1) + ' 80L' + xs[0].toFixed(1) + ' 80Z';
-    let dots = '', labels = '', xlab = '';
-    xs.forEach((x, k) => {
-      dots += '<circle cx="' + x.toFixed(1) + '" cy="' + ys[k].toFixed(1) + '" r="2.6" class="hdot"/>';
-      const la = k === 0 ? 'start' : (k === N - 1 ? 'end' : 'middle');
-      labels += '<text x="' + x.toFixed(1) + '" y="' + (ys[k] - 9).toFixed(1) + '" text-anchor="' + la + '">' + wpUnitConv(temps[k]) + '°</text>';
-      if (k % 2 === 0){
-        const anchor = k === 0 ? 'start' : (k === N - 1 ? 'end' : 'middle');
-        xlab += '<text x="' + x.toFixed(1) + '" y="93" text-anchor="' + anchor + '">' + times[k] + '</text>';
-      }
-      if (pre[k] > 0){
-        const anchor2 = k === 0 ? 'start' : (k === N - 1 ? 'end' : 'middle');
-        xlab += '<text x="' + x.toFixed(1) + '" y="107" text-anchor="' + anchor2 + '" class="hpre">' + pre[k] + '%</text>';
-      }
-    });
-    return '<svg viewBox="0 0 ' + W + ' 112" preserveAspectRatio="none" style="min-height:112px">'
-      + '<path class="harea" d="' + area + '"/>'
-      + '<polyline points="' + xs.map((x, k) => x.toFixed(1) + ',' + ys[k].toFixed(1)).join(' ') + '"/>'
-      + dots + labels + xlab + '</svg>';
-  }
-  function renderWpanel(){
-    const uBtn = $('#wpUnit');
-    if (uBtn) uBtn.textContent = wpUnitLabel();
-    if (!wpData) return;
-    const d = wpData, cur = d.current;
-    renderWpCity();
-    $('#wpNow').innerHTML = weatherIcon(cur.weather_code, cur.is_day)
-      + '<span class="wp-big">' + wpUnitConv(cur.temperature_2m) + wpUnitLabel() + '</span>'
-      + '<span class="wp-cond"><b>' + esc(condName(cur.weather_code)) + '</b>'
-      + '<span>最高 ' + wpUnitConv(d.daily.temperature_2m_max[0]) + '° · 最低 ' + wpUnitConv(d.daily.temperature_2m_min[0]) + '°</span>'
-      + '<span>体感 ' + wpUnitConv(cur.apparent_temperature) + '°</span></span>';
-    $('#wpDaily').innerHTML = d.daily.time.slice(0, 7).map((t, i) =>
-      '<div class="wp-day' + (i === 0 ? ' today' : '') + '" title="' + esc(condName(d.daily.weather_code[i])) + '">'
-      + '<span class="dn">' + (i === 0 ? '今天' : esc(wpWeekday(t))) + '</span>'
-      + weatherIcon(d.daily.weather_code[i])
-      + '<span class="dc">' + esc(condName(d.daily.weather_code[i])) + '</span>'
-      + '<span class="dts"><span class="dt">' + wpUnitConv(d.daily.temperature_2m_max[i]) + '°</span>'
-      + '<span class="ds">' + wpUnitConv(d.daily.temperature_2m_min[i]) + '°</span></span></div>'
-    ).join('');
-    $('#wpHourly').innerHTML = hourlySVG(d);
-    const i0 = wpNowIndex(d);
-    const ws = Math.round(cur.wind_speed_10m);
-    $('#mWind').innerHTML = '<h4>风<span class="arr">›</span></h4>'
-      + '<div class="wp-mval">' + ws + '<small> 公里/小时</small></div>'
-      + '<div class="wp-msub">' + windDirName(cur.wind_direction_10m) + ' · ' + beaufort(cur.wind_speed_10m) + ' 级</div>';
-    const rh = cur.relative_humidity_2m;
-    const rhs = [];
-    for (let k = 0; k < 10; k++){
-      const j = Math.min(i0 + k, d.hourly.time.length - 1);
-      rhs.push(d.hourly.relative_humidity_2m ? d.hourly.relative_humidity_2m[j] : rh);
-    }
-    $('#mHum').innerHTML = '<h4>湿度<span class="arr">›</span></h4>'
-      + '<div class="wp-bars">' + rhs.map(v => '<i style="height:' + Math.max(8, Math.round(v)) + '%"></i>').join('') + '</div>'
-      + '<div class="wp-msub">' + rh + '% 相对湿度 · 露点 ' + Math.round(dewPoint(cur.temperature_2m, rh)) + '°</div>';
-    const pnow = cur.surface_pressure;
-    const p3 = d.hourly.surface_pressure ? d.hourly.surface_pressure[Math.max(0, i0 - 3)] : null;
-    const dP = (p3 != null) ? (pnow - p3) : null;
-    $('#mPress').innerHTML = '<h4>气压<span class="arr">›</span></h4>'
-      + '<div class="wp-mval">' + Math.round(pnow) + '<small> hPa</small></div>'
-      + '<div class="wp-msub">' + (dP == null || Math.abs(dP) < 0.5 ? '较 3 小时前基本持平'
-        : (dP > 0 ? '较 3 小时前 ↑ ' : '较 3 小时前 ↓ ') + Math.abs(dP).toFixed(1) + ' hPa') + '</div>';
-    const vis = d.hourly.visibility ? d.hourly.visibility[i0] : null;
-    const visKm = vis == null ? null : vis / 1000;
-    $('#mVis').innerHTML = '<h4>能见度<span class="arr">›</span></h4>'
-      + '<div class="wp-mval">' + (visKm == null ? '--' : visKm >= 10 ? Math.round(visKm) : visKm.toFixed(1)) + '<small> 公里</small></div>'
-      + '<div class="wp-msub">能见状况：' + visLevel(visKm) + '</div>';
-    const uv = d.hourly.uv_index ? d.hourly.uv_index[i0] : null;
-    const uvv = uv == null ? null : Math.round(uv * 10) / 10;
-    $('#mUv').innerHTML = '<h4>紫外线指数</h4>'
-      + '<div class="wp-mval" style="color:' + uvColor(uvv) + '">' + (uvv == null ? '--' : uvv) + '</div>'
-      + '<div class="wp-msub">' + uvLevel(uvv) + '</div>';
-    const sr = (d.daily.sunrise[0] || '').slice(11, 16), ss = (d.daily.sunset[0] || '').slice(11, 16);
-    const toMin = s => Number(s.slice(0, 2)) * 60 + Number(s.slice(3, 5));
-    const off = (d.utc_offset_seconds || 0) * 1000;
-    const nowL = new Date(Date.now() + off);
-    const curMin = nowL.getUTCHours() * 60 + nowL.getUTCMinutes();
-    const prog = Math.max(0, Math.min(1, (curMin - toMin(sr)) / Math.max(1, toMin(ss) - toMin(sr))));
-    const mt = 1 - prog;
-    const bx = mt*mt*10 + 2*prog*mt*80 + prog*prog*150;
-    const by = mt*mt*38 + 2*prog*mt*(-16) + prog*prog*38;
-    const mins = Math.max(0, toMin(ss) - toMin(sr));
-    $('#mSun').innerHTML = '<h4>日出与日落</h4>'
-      + '<svg viewBox="0 0 160 44" style="width:100%;height:40px">'
-      + '<path class="sunline" d="M10 38 Q 80 -16 150 38"/>'
-      + '<line class="sunbase" x1="6" y1="38" x2="154" y2="38"/>'
-      + '<circle cx="' + bx.toFixed(1) + '" cy="' + by.toFixed(1) + '" r="4.5" fill="#FFC531"/></svg>'
-      + '<div class="wp-sunrow"><span>↑ ' + sr + '</span><span>日照 ' + Math.floor(mins/60) + '小时' + (mins%60) + '分</span><span>↓ ' + ss + '</span></div>';
-    updateWpClock();
-  }
-  function updateWpClock(){
-    const el = $('#wpTime');
-    if (!el) return;
-    if (!wpData){ el.textContent = ''; return; }
-    const off = (wpData.utc_offset_seconds || 0) * 1000;
-    const n = new Date(Date.now() + off);
-    el.textContent = '当地时间 ' + String(n.getUTCHours()).padStart(2, '0') + ':' + String(n.getUTCMinutes()).padStart(2, '0');
-  }
-  const wpUnitBtn = $('#wpUnit');
-  if (wpUnitBtn) wpUnitBtn.addEventListener('click', () => {
-    state.wunit = state.wunit === 'f' ? 'c' : 'f';
-    save();
-    renderWpanel();
-  });
-
   /* ---------- 启动 ---------- */
   buildWallList();
   applyState();
   buildColors();
   loadWeather();
-  loadWpanel();
-  setInterval(loadWpanel, 30 * 60 * 1000);
-  setInterval(updateWpClock, 30 * 1000);
   updateClock();
   setInterval(updateClock, 1000);
   setInterval(loadWeather, 60 * 60 * 1000);
   scheduleIdle();
 </script>
-
-</body></html>
+</body>
+</html>
