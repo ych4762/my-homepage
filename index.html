@@ -196,9 +196,9 @@
     border-radius:5px;
     display:grid;place-items:center;
     color:#fff;
-    font-size:12px;
+    font-size:13px;
     font-weight:700;
-    letter-spacing:-.2px;
+    letter-spacing:0;
     line-height:1;
   }
   .engine-menu{
@@ -230,7 +230,7 @@
   .engine-item:hover{background:#F2F5F8}
   .engine-item.active{background:#EFF3F7}
   .engine-item .check{margin-left:auto;color:#1890FF}
-  .engine-item .engine-mark{width:18px;height:18px;font-size:11px;border-radius:4px}
+  .engine-item .engine-mark{width:18px;height:18px;font-size:12px;border-radius:4px}
   .search:focus-within{
     border-color:rgba(24,144,255,.55);
     box-shadow:0 4px 18px rgba(24,144,255,.13);
@@ -1307,13 +1307,13 @@
               <h3>搜索</h3>
               <div class="row"><span class="lbl">搜索引擎</span>
                 <span class="sel-wrap"><select class="sel" data-select="engine">
-                  <option value="google">Google</option>
-                  <option value="bing">Bing</option>
-                  <option value="yahoo">Yahoo</option>
-                  <option value="baidu">Baidu</option>
-                  <option value="yandex">Yandex</option>
-                  <option value="duckduckgo">DuckDuckGo</option>
-                  <option value="edge">Edge</option>
+                  <option value="google">谷歌</option>
+                  <option value="bing">必应</option>
+                  <option value="yahoo">雅虎</option>
+                  <option value="baidu">百度</option>
+                  <option value="yandex">扬德克斯</option>
+                  <option value="duckduckgo">鸭鸭搜索</option>
+                  <option value="edge">微软搜索</option>
                 </select></span>
               </div>
               <div class="row"><span class="lbl">打开方式</span>
@@ -1330,7 +1330,7 @@
           <div>
             <div class="card">
               <h3>当前引擎</h3>
-              <div class="row"><span class="lbl">默认搜索</span><span id="engineName" style="font-size:12.5px;color:#3B444D">Bing</span></div>
+              <div class="row"><span class="lbl">默认搜索</span><span id="engineName" style="font-size:12.5px;color:#3B444D">必应</span></div>
               <p class="hint">在新标签页直接开始搜索，不用先打开搜索引擎首页。</p>
             </div>
             <div class="card">
@@ -1542,14 +1542,15 @@
   const KEY = 'monstyle.home.v2';
   const WEATHER_KEY = 'monstyle.weather.v2';
 
+  /* 搜索引擎：界面一律用中文名称与汉字角标，不再显示英文品牌字母。 */
   const ENGINES = {
-    google:     { name:'Google',     mark:'G',  color:'#4285F4', url:'https://www.google.com/search?q=' },
-    bing:       { name:'Bing',       mark:'b',  color:'#008373', url:'https://www.bing.com/search?q=' },
-    yahoo:      { name:'Yahoo',      mark:'Y',  color:'#6001D2', url:'https://search.yahoo.com/search?p=' },
-    baidu:      { name:'Baidu',      mark:'百', color:'#2932E1', url:'https://www.baidu.com/s?wd=' },
-    yandex:     { name:'Yandex',     mark:'Я',  color:'#FC3F1D', url:'https://yandex.com/search/?text=' },
-    duckduckgo: { name:'DuckDuckGo', mark:'D',  color:'#DE5833', url:'https://duckduckgo.com/?q=' },
-    edge:       { name:'Edge',       mark:'e',  color:'#0F6CBD', url:'https://www.bing.com/search?q=' }
+    google:     { name:'谷歌',     mark:'谷', color:'#4285F4', url:'https://www.google.com/search?q=' },
+    bing:       { name:'必应',     mark:'必', color:'#008373', url:'https://www.bing.com/search?q=' },
+    yahoo:      { name:'雅虎',     mark:'雅', color:'#6001D2', url:'https://search.yahoo.com/search?p=' },
+    baidu:      { name:'百度',     mark:'百', color:'#2932E1', url:'https://www.baidu.com/s?wd=' },
+    yandex:     { name:'扬德克斯', mark:'扬', color:'#FC3F1D', url:'https://yandex.com/search/?text=' },
+    duckduckgo: { name:'鸭鸭搜索', mark:'鸭', color:'#DE5833', url:'https://duckduckgo.com/?q=' },
+    edge:       { name:'微软搜索', mark:'微', color:'#0F6CBD', url:'https://www.bing.com/search?q=' }
   };
   const ENGINE_ORDER = ['google','bing','yahoo','baidu','yandex','duckduckgo','edge'];
 
