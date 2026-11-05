@@ -269,6 +269,32 @@
   .search-history svg{flex:0 0 12px;color:#B4BDC6}
   .search-history .empty{padding:12px 10px;font-size:12px;color:#A7AFB7}
 
+  /* ---------- 主页天气 ---------- */
+  .main-weather{
+    display:flex;
+    gap:12px;
+    margin-top:16px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .main-weather:empty{display:none}
+  .mw-card{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 14px;
+    border-radius:10px;
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.15);
+    color:#fff;
+    font-size:13px;
+  }
+  .mw-card svg{width:24px;height:24px}
+  .mw-temp{font-weight:600;font-size:15px}
+  .mw-city{opacity:.85}
+
   /* ---------- 磁贴 ---------- */
   .grid{
     width:100%;
@@ -1028,6 +1054,8 @@
       <div class="search-history" id="searchHistory"></div>
       <div class="engine-menu" id="engineMenu"></div>
     </div>
+
+    <div class="main-weather" id="mainWeather"></div>
 
     <div class="grid" id="grid"></div>
     <div class="edit-hint">编辑模式：点击图标修改，右上角 × 删除，点击「+ 添加」新增</div>
@@ -2111,8 +2139,16 @@
   }
   function renderWeather(){
     const box = $('#bsCities');
-    if (!box) return;
-    box.innerHTML = state.cities.map((c, i) => cityBlock(c.name, weatherList[i])).join('');
+    if (box) box.innerHTML = state.cities.map((c, i) => cityBlock(c.name, weatherList[i])).join('');
+    // 主页面天气小卡片
+    const mwBox = $('#mainWeather');
+    if (mwBox){
+      mwBox.innerHTML = weatherList.filter(w => w).map(w =>
+        '<div class="mw-card">' + weatherIcon(w.code)
+        + '<span class="mw-temp">' + w.temp + '°</span>'
+        + '<span class="mw-city">' + esc(w.name) + '</span></div>'
+      ).join('');
+    }
   }
   function loadWeather(){
     const sig = state.cities.map(c => c.lat + ',' + c.lon).join('|');
