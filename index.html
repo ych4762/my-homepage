@@ -648,7 +648,8 @@
     user-select:none;
   }
   .standby.open{display:flex}
-  body.standby-on .topbar{z-index:45}
+  /* 待机大时钟页保持纯净：整个顶栏（左上角万年历 + 右上角白色按钮组）都不显示 */
+  body.standby-on .topbar{visibility:hidden;pointer-events:none}
   body.standby-on .top-pill{background:rgba(255,255,255,.9);box-shadow:0 2px 10px rgba(0,0,0,.18)}
   body.standby-on .top-pill button{color:#5E6871}
   body.standby-on .top-pill button:hover{color:var(--accent);background:rgba(24,144,255,.1)}
