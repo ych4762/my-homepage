@@ -1220,6 +1220,8 @@
     box-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 12px 34px rgba(0,0,0,.38);
   }
   body.no-calendar .cal{display:none}
+  /* 待机大时钟页保持原样：左上角不显示万年历挂件（用 visibility 保留占位，右上角按钮位置不变） */
+  body.standby-on .cal{visibility:hidden;pointer-events:none}
   body.cal-open .topbar{z-index:45}
   .cal{position:relative;z-index:40}
   .cal-chip{
@@ -2981,6 +2983,13 @@
   function enterStandby(){
     if (!state.standby) return;
     clearTimeout(idleTimer);
+    /* 进入待机页时收起月历，退出后不会残留展开的面板 */
+    const cal = $('#calRoot');
+    if (cal && cal.classList.contains('open')){
+      cal.classList.remove('open');
+      document.body.classList.remove('cal-open');
+      $('#calChip').setAttribute('aria-expanded', 'false');
+    }
     $('#standby').classList.add('open');
     document.body.classList.add('standby-on');
     renderStandby();
